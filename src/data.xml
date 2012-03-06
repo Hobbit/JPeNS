@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<petrinet>
+	<transitions>
+		<transition>
+			<name>T1</name>
+		</transition>	
+		<transition>
+			<name>T2</name>
+		</transition>
+		<transition>
+			<name>T3</name>
+		</transition>		
+	</transitions>
+	
+	<places>
+		<place>
+			<name>p1</name>
+			<tokens>1</tokens>
+		</place>
+		<place>
+			<name>p2</name>
+			<tokens>0</tokens>
+		</place>
+		<place>
+			<name>p3</name>
+		</place>	
+	</places>
+
+	<arcs>
+		<arc>
+			<name>A1</name>
+			<from>
+				<place>P1</place>
+			</from>
+			<to>
+				<transition>T1</transition>
+			</to>
+		</arc>	
+		<arc>
+			<name>A2</name>
+			<from>
+				<transition>T1</transition>
+			</from>
+			<to>
+				<place>P2</place>
+			</to>
+		</arc>	
+		<arc>
+			<name>A3</name>
+			<from>
+				<place>P2</place>
+			</from>
+			<to>
+				<transition>T2</transition>
+			</to>
+		</arc>	
+		<arc>
+			<name>a1</name>
+			<from>
+				<transition>T2</transition>
+			</from>
+			<to>
+				<place>P1</place>
+			</to>
+		</arc>	
+	</arcs>
+</petrinet>
