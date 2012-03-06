@@ -51,7 +51,7 @@ class Importer
 			    NodeList transitionElements = docEle.getElementsByTagName("transition");
 			
 			    // Print total transition elements in document
-				List<String> transitions = GetTransitions(transitionElements);
+				List<TransitionNode> transitions = GetTransitions(transitionElements);
 			    System.out.println("Total transitions: " + transitions.size());
 
 				// Find the node containing the places
@@ -179,9 +179,9 @@ class Importer
 	}
 	
 	// Gets the names of all the transitions in the given nodelist
-	private static List<String> GetTransitions(NodeList nl)
+	private static List<TransitionNode> GetTransitions(NodeList nl)
 	{
-		List<String> transitions = new List<String>();
+		List<TransitionNode> transitions = new List<String>();
 		
 		// We have to find each Transition element in this NodeList nl
 		if(nl != null && nl.getLength() > 0) 
@@ -193,19 +193,62 @@ class Importer
 				
 				// Get the name of the transition
 				String name = getTextValue(el,"Name");
-
+				TransitionNode node = new TransitionNode(name);
+				
 				//add it to the list of transition names
-				transitions.add(name);
+				transitions.add(node);
 			}
 		}
 		
 		return transitions;
 	}
 	
-	
+	// Gets the places from the given nodelist
+	private static List<
 }
 
+// Holds all of the properties that a transition has, but without any of the other logic that petrinet.logic.Transition has
+class TransitionNode
+{
+	public String Name;
+	
+	public TransitionNode(String name)
+	{
+		Name = name;
+	}
+}
 
+// Holds all of the properties that a Place has, but without any of the other logic that petrinet.logic.Place has
+class PlaceNode
+{
+	public String Name;
+	public int NumTokens;
+	
+	public PlaceNode(String name, int tokens)
+	{
+		Name = name;
+		NumTokens = tokens;
+	}
+}
+
+// Holds all of the properties that an Arc has, but without any of the other logic that petrinet.logic.Arc has
+class ArcNode
+{
+	public String Name;
+	public String ToName;
+	public String ToType;
+	public String FromName;
+	public String FromType;
+	
+	public PlaceNode(String name, String toName, String toType, String fromName, String fromType)
+	{
+		Name = name;
+		ToName = toName;
+		ToType = toType;
+		FromName = fromName;
+		FromType = fromType;
+	}
+}
 
 
 
