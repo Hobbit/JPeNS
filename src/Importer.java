@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
  
@@ -46,20 +47,25 @@ class Importer
 			    Document doc = db.parse(file);
 			    Element docEle = doc.getDocumentElement();
 
-			    // Print root element of the document
-			    System.out.println("Root element of the document: " + docEle.getNodeName());
-
-			    NodeList transitions = docEle.getElementsByTagName("transition");
-
+				// Find the nodes containing the transitions
+			    NodeList transitionElements = docEle.getElementsByTagName("transition");
+			
 			    // Print total transition elements in document
-			    System.out.println("Total transitions: " + transitions.getLength());
+				List<String> transitions = GetTransitions(transitionElements);
+			    System.out.println("Total transitions: " + transitions.size());
 
-			    NodeList places = docEle.getElementsByTagName("place");
+				// Find the node containing the places
+				Node placesBlock = docEle.getElementsByTagName("places").item(0);
+				
+			    NodeList places = placesBlock.getElementsByTagName("place");
 
 			    // Print total place elements in document
 			    System.out.println("Total places: " + places.getLength());
 
-			    NodeList arcs = docEle.getElementsByTagName("arc");
+				//Find the node containing the arcs
+				Node arcsBlock = docEle.getElementsByTagName("arcs").item(0);
+				
+			    NodeList arcs = arcsBlock.getElementsByTagName("arc");
 
 			    // Print total arc elements in document
 			    System.out.println("Total arcs: " + arcs.getLength());
@@ -143,6 +149,9 @@ class Importer
 							System.out.println("Name: " + name);
 							
 			                NodeList fromList = e.getElementsByTagName("from");
+						
+							// TODO:  Check if we are coming from a transition or a place
+							//NodeList placeList = f
 							String from = nodeList.item(0).getChildNodes().item(0).getNodeValue();
 							System.out.println("From: " + from);
 
@@ -167,14 +176,36 @@ class Importer
 		{
 	        System.out.println(e);
         }
-		
-		// BufferedReader reader = new BufferedReader(file);
-		// 
-		// String str = "";
-		// while ((str = file.readLine()) != null)
-		// {
-		// 	// Add the word to our list of words
-		// 	Words.add(str.trim());
-		// }
 	}
+	
+	// Gets the names of all the transitions in the given nodelist
+	private static List<String> GetTransitions(NodeList nl)
+	{
+		List<String> transitions = new List<String>();
+		
+		// We have to find each Transition element in this NodeList nl
+		if(nl != null && nl.getLength() > 0) 
+		{
+			for(int i = 0; i < nl.getLength(); i++) 
+			{
+				// Get the Transition element
+				Element el = (Element)nl.item(i);
+				
+				// Get the name of the transition
+				String name = getTextValue(el,"Name");
+
+				//add it to the list of transition names
+				transitions.add(name);
+			}
+		}
+		
+		return transitions;
+	}
+	
+	
 }
+
+
+
+
+
