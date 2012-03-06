@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
  
@@ -55,40 +56,31 @@ class Importer
 			    System.out.println("Total transitions: " + transitions.size());
 
 				// Find the node containing the places
-				Node placesBlock = docEle.getElementsByTagName("places").item(0);
+				NodeList placesElements = docEle.getElementsByTagName("place");
 				
-			    NodeList places = placesBlock.getElementsByTagName("place");
-
 			    // Print total place elements in document
-			    System.out.println("Total places: " + places.getLength());
+				List<PlaceNode> places = GetPlaces(placesElements);
+			    System.out.println("Total places: " + places.size());
 
 				//Find the node containing the arcs
-				Node arcsBlock = docEle.getElementsByTagName("arcs").item(0);
+				NodeList arcsElements = docEle.getElementsByTagName("arcs");
 				
-			    NodeList arcs = arcsBlock.getElementsByTagName("arc");
-
 			    // Print total arc elements in document
-			    System.out.println("Total arcs: " + arcs.getLength());
+				List<ArcNode> arcs = GetArcs(arcsElements);
+			    System.out.println("Total arcs: " + arcs.size());
 			
 				// Find all of the transitions in the data file
-			    if (transitions != null && transitions.getLength() > 0) 
+			    if (transitions != null && transitions.size() > 0) 
 				{
-			        for (int i = 0; i < transitions.getLength(); i++) 
+			        for (int i = 0; i < transitions.size(); i++) 
 					{
 
-			            Node node = transitions.item(i);
+		                System.out.println("=====================\nTransition: ");
 
-			            if (node.getNodeType() == Node.ELEMENT_NODE) 
-						{
-			                System.out.println("=====================\nTransition: ");
-
-			                Element e = (Element) node;
-			                NodeList nodeList = e.getElementsByTagName("name");
-			                System.out.println("Name: " + nodeList.item(0).getChildNodes().item(0).getNodeValue());
-				
-							// Add this transition to our Petrinet
-							pn.transition(nodeList.item(0).getChildNodes().item(0).getNodeValue());
-			            }
+		                System.out.println("Name: " + transitions.get(i).Name);
+			
+						// Add this transition to our Petrinet
+						pn.transition(transitions.get(i).Name);
 			        }
 			    } 
 				else 
@@ -98,30 +90,19 @@ class Importer
                 }
 
 				// Find all of the places in the data file
-			    if (places != null && places.getLength() > 0) 
+			    if (places != null && places.size() > 0) 
 				{
-			        for (int i = 0; i < places.getLength(); i++) 
+			        for (int i = 0; i < places.size(); i++) 
 					{
 
-			            Node node = places.item(i);
+		                System.out.println("=====================\nPlace: ");
 
-			            if (node.getNodeType() == Node.ELEMENT_NODE) 
-						{
-			                System.out.println("=====================\nPlace: ");
-
-			                Element e = (Element) node;
-			
-			                NodeList nodeList = e.getElementsByTagName("name");
-							String name = nodeList.item(0).getChildNodes().item(0).getNodeValue();
-							System.out.println("Name: " + name);
-							
-			                NodeList tokenList = e.getElementsByTagName("tokens");
-							int tokens = Integer.parseInt(nodeList.item(0).getChildNodes().item(0).getNodeValue());
-							System.out.println("Tokens: " + tokens);
-							
-							// Add this place to our Petrinet
-							pn.place(name, tokens);
-			            }
+						System.out.println("Name: " + places.get(i).Name);
+						
+						System.out.println("Tokens: " + places.get(i).Tokens);
+						
+						// Add this place to our Petrinet
+						pn.place(places.get(i).Name, places.get(i).Tokens);
 			        }
 			    } 
 				else 
@@ -131,37 +112,29 @@ class Importer
                 }
 
 				// Find all of the arcs in the data file
-			    if (arcs != null && arcs.getLength() > 0) 
+			    if (arcs != null && arcs.size() > 0) 
 				{
-			        for (int i = 0; i < arcs.getLength(); i++) 
+			        for (int i = 0; i < arcs.size(); i++) 
 					{
+						ArcNode arc = arcs.get(i);
+		                System.out.println("=====================\nArc: ");
 
-			            Node node = arcs.item(i);
-
-			            if (node.getNodeType() == Node.ELEMENT_NODE) 
-						{
-			                System.out.println("=====================\nArc: ");
-
-			                Element e = (Element) node;
-			
-			                NodeList nodeList = e.getElementsByTagName("name");
-							String name = nodeList.item(0).getChildNodes().item(0).getNodeValue();
-							System.out.println("Name: " + name);
-							
-			                NodeList fromList = e.getElementsByTagName("from");
+						System.out.println("Name: " + arc.Name);
 						
-							// TODO:  Check if we are coming from a transition or a place
-							//NodeList placeList = f
-							String from = nodeList.item(0).getChildNodes().item(0).getNodeValue();
-							System.out.println("From: " + from);
-
-			                NodeList toList = e.getElementsByTagName("to");
-							String to = nodeList.item(0).getChildNodes().item(0).getNodeValue();
-							System.out.println("To: " + to);
-							
-							// Add this arc to our Petrinet assuming its from a place to a transition
-							pn.arc(name, pn.getPlace(from), pn.getTransition(to));
-			            }
+						if (arc.FromType == "place" && arc.ToType == "transition")
+						{
+							// Add this arc to our Petrinet coming from a place to a transition
+							pn.arc(arc.Name, pn.getPlace(arc.FromName), pn.getTransition(arc.ToName));							
+						}
+						else if (arc.FromType == "transition" && arc.ToType == "place")
+						{
+							// Add this arc to our Petrinet coming from a transition to a place
+							pn.arc(arc.Name, pn.getTransition(arc.FromName), pn.getPlace(arc.ToName));
+						}
+						
+						System.out.println("From: " + arc.FromName);
+						System.out.println("To: " + arc.ToName);
+						
 			        }
 			    } 
 
@@ -181,7 +154,7 @@ class Importer
 	// Gets the names of all the transitions in the given nodelist
 	private static List<TransitionNode> GetTransitions(NodeList nl)
 	{
-		List<TransitionNode> transitions = new List<String>();
+		List<TransitionNode> transitions = new ArrayList<TransitionNode>();
 		
 		// We have to find each Transition element in this NodeList nl
 		if(nl != null && nl.getLength() > 0) 
@@ -192,7 +165,7 @@ class Importer
 				Element el = (Element)nl.item(i);
 				
 				// Get the name of the transition
-				String name = getTextValue(el,"Name");
+				String name = NodeReader.getTextValue(el, "name");
 				TransitionNode node = new TransitionNode(name);
 				
 				//add it to the list of transition names
@@ -204,7 +177,66 @@ class Importer
 	}
 	
 	// Gets the places from the given nodelist
-	private static List<
+	private static List<PlaceNode> GetPlaces(NodeList nl)
+	{
+		List<PlaceNode> places = new ArrayList<PlaceNode>();
+		
+		// We have to find each Place element in this NodeList nl
+		if(nl != null && nl.getLength() > 0) 
+		{
+			for(int i = 0; i < nl.getLength(); i++) 
+			{
+				// Get the Place element
+				Element el = (Element)nl.item(i);
+				
+				// Get the name of the place
+				String name = NodeReader.getTextValue(el, "name");
+				
+				// Get the number of tokens
+				int tokens = Integer.parseInt(NodeReader.getTextValue(el, "tokens"));
+				PlaceNode node = new PlaceNode(name, tokens);
+				
+				//add it to the list of places 
+				places.add(node);
+			}
+		}
+		
+		return places;
+	}
+
+	// Gets the arcs from the given nodelist
+	private static List<ArcNode> GetArcs(NodeList nl)
+	{
+		List<ArcNode> arcs = new ArrayList<ArcNode>();
+		
+		// We have to find each arc element in this NodeList nl
+		if(nl != null && nl.getLength() > 0) 
+		{
+			for(int i = 0; i < nl.getLength(); i++) 
+			{
+				// Get the arc element
+				Element el = (Element)nl.item(i);
+				
+				// Get the name of the arc
+				String name = NodeReader.getTextValue(el, "name");
+				
+				// Get the FromType
+				String fromNode = NodeReader.getTextValue(el, "from");
+				String fromType = el.getAttribute("type");
+				
+				// Get the ToType
+				String toNode = NodeReader.getTextValue(el, "to");
+				String toType = el.getAttribute("type");
+				
+				ArcNode node = new ArcNode(name, fromNode, fromType, toNode, toType);
+				
+				//add it to the list of arcs 
+				arcs.add(node);
+			}
+		}
+		
+		return arcs;
+	}
 }
 
 // Holds all of the properties that a transition has, but without any of the other logic that petrinet.logic.Transition has
@@ -222,12 +254,12 @@ class TransitionNode
 class PlaceNode
 {
 	public String Name;
-	public int NumTokens;
+	public int Tokens;
 	
 	public PlaceNode(String name, int tokens)
 	{
 		Name = name;
-		NumTokens = tokens;
+		Tokens = tokens;
 	}
 }
 
@@ -240,7 +272,7 @@ class ArcNode
 	public String FromName;
 	public String FromType;
 	
-	public PlaceNode(String name, String toName, String toType, String fromName, String fromType)
+	public ArcNode(String name, String toName, String toType, String fromName, String fromType)
 	{
 		Name = name;
 		ToName = toName;
@@ -250,5 +282,19 @@ class ArcNode
 	}
 }
 
+// Given an element, it searches for text within the element
+class NodeReader
+{
+	public static String getTextValue(Element ele, String tagName) {
+		String textVal = null;
+		NodeList nl = ele.getElementsByTagName(tagName);
+		if(nl != null && nl.getLength() > 0) {
+			Element el = (Element)nl.item(0);
+			textVal = el.getFirstChild().getNodeValue();
+		}
+
+		return textVal;
+	}
+}
 
 
