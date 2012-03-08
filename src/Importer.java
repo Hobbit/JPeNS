@@ -11,9 +11,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import petrinet.logic.Petrinet;
+import petrinet.logic.Arc;
 
 class Importer
 {
+	private final boolean PRINT_DIAG_INFO = true;
+	
 	public Importer(String filepath, Petrinet pn)
 	{
 		try
@@ -63,7 +66,7 @@ class Importer
 			    System.out.println("Total places: " + places.size());
 
 				//Find the node containing the arcs
-				NodeList arcsElements = docEle.getElementsByTagName("arcs");
+				NodeList arcsElements = docEle.getElementsByTagName("arc");
 				
 			    // Print total arc elements in document
 				List<ArcNode> arcs = GetArcs(arcsElements);
@@ -72,16 +75,16 @@ class Importer
 				// Find all of the transitions in the data file
 			    if (transitions != null && transitions.size() > 0) 
 				{
-			        for (int i = 0; i < transitions.size(); i++) 
+					for (TransitionNode tran : transitions)
 					{
-
-		                System.out.println("=====================\nTransition: ");
-
-		                System.out.println("Name: " + transitions.get(i).Name);
-			
+						if (PRINT_DIAG_INFO == true)
+						{
+							System.out.println("=====================\nTransition: ");
+			                System.out.println("Name: " + tran.Name);
+						}
 						// Add this transition to our Petrinet
-						pn.transition(transitions.get(i).Name);
-			        }
+						pn.transition(tran.Name);
+					}
 			    } 
 				else 
 				{
@@ -92,17 +95,18 @@ class Importer
 				// Find all of the places in the data file
 			    if (places != null && places.size() > 0) 
 				{
-			        for (int i = 0; i < places.size(); i++) 
+			        for (PlaceNode place : places) 
 					{
+						if (PRINT_DIAG_INFO == true)
+						{
+			                System.out.println("=====================\nPlace: ");
 
-		                System.out.println("=====================\nPlace: ");
-
-						System.out.println("Name: " + places.get(i).Name);
+							System.out.println("Name: " + place.Name);
 						
-						System.out.println("Tokens: " + places.get(i).Tokens);
-						
+							System.out.println("Tokens: " + place.Tokens);
+						}
 						// Add this place to our Petrinet
-						pn.place(places.get(i).Name, places.get(i).Tokens);
+						pn.place(place.Name, place.Tokens);
 			        }
 			    } 
 				else 
@@ -114,30 +118,37 @@ class Importer
 				// Find all of the arcs in the data file
 			    if (arcs != null && arcs.size() > 0) 
 				{
-			        for (int i = 0; i < arcs.size(); i++) 
+			        for (ArcNode arc : arcs) 
 					{
-						ArcNode arc = arcs.get(i);
-		                System.out.println("=====================\nArc: ");
-
-						System.out.println("Name: " + arc.Name);
-						
+						//System.out.printf("\n\nWe have an arc whose FromType = %s and ToType = %s\n\n", arc.FromType, arc.ToType);
 						if (arc.FromType == "place" && arc.ToType == "transition")
 						{
 							// Add this arc to our Petrinet coming from a place to a transition
+							//System.out.printf("We are making an are from %s to %s", pn.getPlace(arc.FromName).getName(), pn.getTransition(arc.ToName).getName());
 							pn.arc(arc.Name, pn.getPlace(arc.FromName), pn.getTransition(arc.ToName));							
 						}
 						else if (arc.FromType == "transition" && arc.ToType == "place")
 						{
 							// Add this arc to our Petrinet coming from a transition to a place
+							//System.out.printf("We are making an are from %s to %s", pn.getTransition(arc.ToName).getName(), pn.getPlace(arc.FromName).getName());
 							pn.arc(arc.Name, pn.getTransition(arc.FromName), pn.getPlace(arc.ToName));
 						}
 						
-						System.out.println("From: " + arc.FromName);
-						System.out.println("To: " + arc.ToName);
-						
+						if (PRINT_DIAG_INFO == true)
+						{
+			                System.out.println("=====================\nArc: ");
+							System.out.println("Name: " + arc.Name);
+							System.out.println("From: " + arc.FromName);
+							System.out.println("To: " + arc.ToName);
+							
+							Arc diag = pn.getArc(arc.Name);
+							if (diag != null)
+							{
+								System.out.println("The Arc says it's place is " + diag.getPlace().getName() + " and its transition is " + diag.getTransition().getName() + ".");
+							}
+						}
 			        }
 			    } 
-
 				else 
 				{
 					System.out.println("The importer failed at arcs.\n");
@@ -193,7 +204,12 @@ class Importer
 				String name = NodeReader.getTextValue(el, "name");
 				
 				// Get the number of tokens
-				int tokens = Integer.parseInt(NodeReader.getTextValue(el, "tokens"));
+				int tokens = 0;
+				String tokenVal = NodeReader.getTextValue(el, "tokens");
+				if (tokenVal != null)
+				{
+					tokens = Integer.parseInt(tokenVal);
+				}
 				PlaceNode node = new PlaceNode(name, tokens);
 				
 				//add it to the list of places 
@@ -219,10 +235,14 @@ class Importer
 				
 				// Get the name of the arc
 				String name = NodeReader.getTextValue(el, "name");
-				
+								
 				// Get the FromType
 				String fromNode = NodeReader.getTextValue(el, "from");
 				String fromType = el.getAttribute("type");
+				//String fromType = el.getAttributes().getNamedItem("type").getNodeValue();
+				
+				System.out.printf("\n\nWe just processed a node that's an arc with fromType = %s\n\n", fromType);
+				
 				
 				// Get the ToType
 				String toNode = NodeReader.getTextValue(el, "to");

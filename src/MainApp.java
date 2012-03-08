@@ -24,6 +24,8 @@ public class MainApp
         // Arc a3 = pn.arc("a3", p2, t2);
         // Arc a4 = pn.arc("a4", t2, p1);
 
+		System.out.println(pn.getArcs().toString());
+
         petrinet.gui.PetrinetGUI.displayPetrinet(pn);
     }
 }

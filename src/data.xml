@@ -5,9 +5,6 @@
 	</transition>	
 	<transition>
 		<name>T2</name>
-	</transition>
-	<transition>
-		<name>T3</name>
 	</transition>		
 
 	<place>
@@ -17,9 +14,6 @@
 	<place>
 		<name>p2</name>
 		<tokens>0</tokens>
-	</place>
-	<place>
-		<name>p3</name>
 	</place>	
 
 	<arc>
@@ -38,7 +32,7 @@
 		<to type="transition">T2</to>
 	</arc>	
 	<arc>
-		<name>a1</name>
+		<name>A4</name>
 		<from type="transition">T2</from>
 		<to type="place">P1</to>
 	</arc>	
