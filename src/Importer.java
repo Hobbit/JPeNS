@@ -238,7 +238,7 @@ class Importer
 								
 				// Get the FromType
 				String fromNode = NodeReader.getTextValue(el, "from");
-				String fromType = el.getAttribute("type");
+				String fromType = NodeReader.getNodeAttribute(el, "from", "type");
 				//String fromType = el.getAttributes().getNamedItem("type").getNodeValue();
 				
 				System.out.printf("\n\nWe just processed a node that's an arc with fromType = %s\n\n", fromType);
@@ -246,8 +246,9 @@ class Importer
 				
 				// Get the ToType
 				String toNode = NodeReader.getTextValue(el, "to");
-				String toType = el.getAttribute("type");
-				
+				//String toType = el.getAttribute("type");
+				String toType = NodeReader.getNodeAttribute(el, "to", "type");
+
 				ArcNode node = new ArcNode(name, fromNode, fromType, toNode, toType);
 				
 				//add it to the list of arcs 
@@ -315,6 +316,17 @@ class NodeReader
 
 		return textVal;
 	}
+
+    public static String getNodeAttribute(Element ele, String tagName, String attName) {
+        String attVal = null;
+        Nodelist nl = ele.getElementsByTagName(tagName);
+        if (nl != null &&nl.getLength() > 0) {
+            Element el = (Element)nl.item(0);
+            attVal = el.getAttribute(attName);
+        }
+
+        return attVal;
+    }
 }
 
 
