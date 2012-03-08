@@ -124,13 +124,13 @@ class Importer
 						if (arc.FromType == "place" && arc.ToType == "transition")
 						{
 							// Add this arc to our Petrinet coming from a place to a transition
-							//System.out.printf("We are making an are from %s to %s", pn.getPlace(arc.FromName).getName(), pn.getTransition(arc.ToName).getName());
+							System.out.printf("We are making an are from %s to %s", pn.getPlace(arc.FromName).getName(), pn.getTransition(arc.ToName).getName());
 							pn.arc(arc.Name, pn.getPlace(arc.FromName), pn.getTransition(arc.ToName));							
 						}
 						else if (arc.FromType == "transition" && arc.ToType == "place")
 						{
 							// Add this arc to our Petrinet coming from a transition to a place
-							//System.out.printf("We are making an are from %s to %s", pn.getTransition(arc.ToName).getName(), pn.getPlace(arc.FromName).getName());
+							System.out.printf("We are making an are from %s to %s", pn.getTransition(arc.ToName).getName(), pn.getPlace(arc.FromName).getName());
 							pn.arc(arc.Name, pn.getTransition(arc.FromName), pn.getPlace(arc.ToName));
 						}
 						
@@ -239,14 +239,12 @@ class Importer
 				// Get the FromType
 				String fromNode = NodeReader.getTextValue(el, "from");
 				String fromType = NodeReader.getNodeAttribute(el, "from", "type");
-				//String fromType = el.getAttributes().getNamedItem("type").getNodeValue();
 				
-				System.out.printf("\n\nWe just processed a node that's an arc with fromType = %s\n\n", fromType);
+				//System.out.printf("\nWe just processed a node that's an arc with fromType = %s\n\n", fromType);
 				
 				
 				// Get the ToType
 				String toNode = NodeReader.getTextValue(el, "to");
-				//String toType = el.getAttribute("type");
 				String toType = NodeReader.getNodeAttribute(el, "to", "type");
 
 				ArcNode node = new ArcNode(name, fromNode, fromType, toNode, toType);
@@ -319,8 +317,8 @@ class NodeReader
 
     public static String getNodeAttribute(Element ele, String tagName, String attName) {
         String attVal = null;
-        Nodelist nl = ele.getElementsByTagName(tagName);
-        if (nl != null &&nl.getLength() > 0) {
+        NodeList nl = ele.getElementsByTagName(tagName);
+        if (nl != null && nl.getLength() > 0) {
             Element el = (Element)nl.item(0);
             attVal = el.getAttribute(attName);
         }
