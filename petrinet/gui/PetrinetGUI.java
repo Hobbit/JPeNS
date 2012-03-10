@@ -26,8 +26,7 @@ import petrinet.logic.Transition;
 public class PetrinetGUI extends JFrame {
 
 
-	public class PlaceLabel
-    extends JLabel {
+	public class PlaceLabel extends JLabel {
 
         private Place place;
 
@@ -169,8 +168,7 @@ public class PetrinetGUI extends JFrame {
             public void run() {
                 JFrame window = new PetrinetGUI(pn);
 
-                // Swing anweisen, das Programm zu beenden, wenn das Fenster
-                // geschlossen wird
+                // Exit the application when the window is closed
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 // Set the window size
@@ -179,12 +177,7 @@ public class PetrinetGUI extends JFrame {
             }
         };
 
-        // Fahre den obigen Quellcode im Event-Dispatch-Thread aus
+        // Run this code in the event-dispatch thread 
         SwingUtilities.invokeLater(guiCreator);
     }
-    
-    /**
-	 * This is required for the implementation of JFrame
-	 */
-	private static final long serialVersionUID = -5619944641398724244L;
 }
