@@ -26,15 +26,25 @@ import petrinet.logic.Transition;
 public class PetrinetGUI extends JFrame {
 
 
+	/**
+	 * Extends JLabel and provides the name of a place as a label
+	 */
 	public class PlaceLabel extends JLabel {
 
         private Place place;
 
-        public PlaceLabel(Place p) {
-            super(p.toString());
-            this.place = p;
+        /**
+         * 
+         * @param place A place for this label
+         */
+        public PlaceLabel(Place place) {
+            super(place.toString());
+            this.place = place;
         }
 
+        /**
+         * @return the name of the place, if the place is null, returns null
+         */
         @Override
         public String getText() {
             if (place == null) {
@@ -42,10 +52,11 @@ public class PetrinetGUI extends JFrame {
             }
             return place.toString();
         }
-
     }
 
-
+	/**
+	 * Extends JButton to manage transitions when the user clicks to fire a transition
+	 */
     public class TransitionButton extends JButton {
 
         private Transition transition;
