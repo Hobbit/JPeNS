@@ -143,10 +143,10 @@ extends JFrame {
         	
             buttons[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                		buttons[0].repaint();
-                		buttons[1].repaint();
-                		buttons[2].repaint();
-                	
+                	for (TransitionButton b : buttons) {
+                		b.repaint();
+                	}
+
                     repaint();
                 }});
         }
