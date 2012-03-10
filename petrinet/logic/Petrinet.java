@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class creates a petrinet object, containing places, transitions, arcs, and inhibitors
- *
+ * This contains all of the properties of a petrinet and creates
+ * the framework to allow objects to be added.
  */
 
-public class Petrinet
-extends PetrinetObject {
+
+public class Petrinet extends PetrinetObject {
 
     List<Place> places              = new ArrayList<Place>();
     List<Transition> transitions    = new ArrayList<Transition>();
@@ -21,7 +21,9 @@ extends PetrinetObject {
         super(name);
     }
 
-    // Adds an item to the Petrinet
+    /** 
+     * @param item A PetrinetObject to be added to the petrinet
+     */
     public void add(PetrinetObject item) {
         if (item instanceof InhibitorArc) {
             inhibitors.add((InhibitorArc) item);
@@ -34,7 +36,9 @@ extends PetrinetObject {
         }
     }
     
-    // Retrieves any transitions that are ready to fire
+    /**
+     * @return A list of transitions that are ready to fire
+     */
     public List<Transition> getTransitionsAbleToFire() {
         ArrayList<Transition> list = new ArrayList<Transition>();
         for (Transition t : transitions) {
@@ -45,44 +49,69 @@ extends PetrinetObject {
         return list;
     }
     
-    // Adds a transition to the petrinet
+    /**
+     * @param name The name of the new transition
+     * @return The new transition that was created and added to the petrinet
+     */
     public Transition addTransition(String name) {
         Transition t = new Transition(name);
         transitions.add(t);
         return t;
     }
     
-    // Adds a place to the petrinet with 0 initial tokens
+    /**
+     * @param name The name of the new place
+     * @return The new place that was added to the petrinet with 0 tokens
+     */
     public Place addPlace(String name) {
         return addPlace(name, 0);
     }
     
-    // Adds a place to the petrinet, you set how many initial tokens it has
+    /**
+     * @param name The name for the new place to be added to the petrinet
+     * @param tokens How many initial tokens the new place will have
+     * @return The new place that was added to the petrinet
+     */
     public Place addPlace(String name, int tokens) {
         Place p = new Place(name, tokens);
         places.add(p);
         return p;
     }
     
-    // Adds an arc to the petrinet, coming from a place to a transition
+    /**
+     * @param name The name of the new arc
+     * @param place A place that the arc will originate at
+     * @param tran A transition that the arc will end at
+     * @return A new arc that was added to the petrinet
+     */
     public Arc addArc(String name, Place place, Transition tran) {
         Arc arc = new Arc(name, place, tran);
         arcs.add(arc);
         return arc;
     }
     
-    // Adds an arc to the petrinet, coming from a transition to a place
+    /**
+     * @param name The name of the new arc
+     * @param tran A transition that the arc will originate at
+     * @param place A place that the arc will end at
+     * @return A new arc that was added to the petrinet
+     */
     public Arc addArc(String name, Transition tran, Place place) {
         Arc arc = new Arc(name, tran, place);
         arcs.add(arc);
         return arc;
     }
     
-    // Adds a guard to the petrinet between a place and a transition
-    public InhibitorArc addGuard(String name, Place place, Transition tran) {
-        InhibitorArc guard = new InhibitorArc(name, place, tran);
-        inhibitors.add(guard);
-        return guard;
+    /**
+     * @param name The name of the new inhibitor arc
+     * @param place A place that the inhibitor arc will originate at
+     * @param tran A transition that the inhibitor arc will end at
+     * @return A new inhibitor arc that was added to the petrinet
+     */
+    public InhibitorArc addInhibitorArc(String name, Place place, Transition tran) {
+        InhibitorArc inhibitor = new InhibitorArc(name, place, tran);
+        inhibitors.add(inhibitor);
+        return inhibitor;
     }
     
     @Override
@@ -100,8 +129,11 @@ extends PetrinetObject {
         return sb.toString();
     }
 
-	// Searches through all of the Places in this Petrinet and finds one with the matching name
-	// Returns null if none can be found
+    /**
+     * Searches through the places in the petrinet to find one by name
+     * @param name The name of a place to search for
+     * @return If a place is found it is returned, otherwise null
+     */
 	public Place getPlace(String name) {
 		for (Place p : places) {
 			if (p.getName().equalsIgnoreCase(name)) {
@@ -115,8 +147,11 @@ extends PetrinetObject {
         return places;
     }
 
-	// Searches through all of the Transitions in this Petrinet and finds one with the matching name
-	// Returns null if none can be found
+    /**
+     * Searches through the transitions in the petrinet to find one by name
+     * @param name The name of a transition to search for
+     * @return If a transition is found it is returned, otherwise null
+     */
 	public Transition getTransition(String name) {
 		for (Transition t : transitions) {
 			if (t.getName().equals(name)) {
@@ -130,9 +165,11 @@ extends PetrinetObject {
         return transitions;
     }
 
-	// Searches through all of the Arcs in this Petrinet and finds one with the matching name
-	// Returns null if none can be found
-	public Arc getArc(String name) {
+    /**
+     * Searches through the arcs in the petrinet to find one by name
+     * @param name The name of a arc to search for
+     * @return If an arc is found it is returned, otherwise null
+     */	public Arc getArc(String name) {
 		for (Arc a : arcs) {
 			if (a.getName().equals(name)) {
 				return a;
@@ -145,8 +182,11 @@ extends PetrinetObject {
         return arcs;
     }
 
-	// Searches through all of the InhibitorArcs in this Petrinet and finds one with the matching name
-	// Returns null if none can be found
+    /**
+     * Searches through the inhibitor arcs in the petrinet to find one by name
+     * @param name The name of a inhibitor arc to search for
+     * @return If an inhibitor arc is found it is returned, otherwise null
+     */
     public InhibitorArc getGuard(String name) {
     	for (InhibitorArc g : inhibitors) {
     		if (g.getName().equals(name)) {
