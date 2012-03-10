@@ -8,11 +8,11 @@
 	</transition>		
 
 	<place>
-		<name>p1</name>
+		<name>P1</name>
 		<tokens>1</tokens>
 	</place>
 	<place>
-		<name>p2</name>
+		<name>P2</name>
 		<tokens>0</tokens>
 	</place>	
 
