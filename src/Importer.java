@@ -100,9 +100,7 @@ class Importer
 						if (PRINT_DIAG_INFO == true)
 						{
 			                System.out.println("=====================\nPlace: ");
-
 							System.out.println("Name: " + place.Name);
-						
 							System.out.println("Tokens: " + place.Tokens);
 						}
 						// Add this place to our Petrinet
@@ -304,6 +302,8 @@ class ArcNode
 // Given an element, it searches for text within the element
 class NodeReader
 {
+    // Given an XML element, searches for the first node with tagName as its name
+    // then returns the text inside that node
 	public static String getTextValue(Element ele, String tagName) {
 		String textVal = null;
 		NodeList nl = ele.getElementsByTagName(tagName);
@@ -315,6 +315,8 @@ class NodeReader
 		return textVal;
 	}
 
+    // Given an XML element, searches for the first node with tagName as its name
+    // then returns the attName attribute value of that node
     public static String getNodeAttribute(Element ele, String tagName, String attName) {
         String attVal = null;
         NodeList nl = ele.getElementsByTagName(tagName);
