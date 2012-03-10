@@ -72,6 +72,7 @@ public class PetrinetGUI extends JFrame {
                         transition.fire();
                         System.out.println(pn);
                         fireStateChanged();
+                        refreshButtons(buttons, tList);
                     }
                     if(transition.canFire()){
                 		setBackground(Color.GREEN);
@@ -103,6 +104,8 @@ public class PetrinetGUI extends JFrame {
 
 
     Petrinet pn;
+    List<Transition> tList = null;
+    TransitionButton[] buttons = null;
 
  /*   public PetrinetGUI(Petrinet pn) {
         super(pn.getName());
@@ -123,10 +126,26 @@ public class PetrinetGUI extends JFrame {
         }
     }*/
     
+    public void refreshButtons(TransitionButton[] buttonArr, List<Transition> trans){
+    	for(int i = 0; i < buttonArr.length; i++){
+    		Transition tTemp = trans.get(i);
+    		if(tTemp.canFire()){
+    			buttonArr[i].setBackground(Color.GREEN);
+        	}else if(tTemp.isNotConnected()){
+        		buttonArr[i].setBackground(Color.GRAY);
+        	}else{
+        		buttonArr[i].setBackground(Color.ORANGE);
+        	}
+    		buttonArr[i].repaint();
+    		System.out.println("Repainted:"+buttonArr[i].toString());
+    	}
+    	
+    }
+    
     public PetrinetGUI(Petrinet pn) {
         super(pn.getName());
         this.pn = pn;
-        List<Transition> t = pn.getTransitions();
+        tList = pn.getTransitions();
         List<Place> p = pn.getPlaces();
         Container contentPane = getContentPane();
         JPanel transPan = new JPanel(); 
@@ -134,14 +153,13 @@ public class PetrinetGUI extends JFrame {
         GridBagConstraints c = new GridBagConstraints();
         places.setBorder(BorderFactory.createLineBorder(Color.black));
 
-       // this.setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
         
-        final TransitionButton[] buttons = new TransitionButton[t.size()]; 
+        buttons = new TransitionButton[tList.size()];
         PlaceLabel[] labels = new PlaceLabel[p.size()];
-        for (int i = 0; i < t.size(); i++) {
-        	buttons[i] = new TransitionButton(t.get(i));
+        for (int i = 0; i < tList.size(); i++) {
+        	buttons[i] = new TransitionButton(tList.get(i));
         	transPan.add(buttons[i]);
-        	Transition tTemp = t.get(i);
+        	Transition tTemp = tList.get(i);
         	TransitionButton bTemp = buttons[i];
         	if(tTemp.canFire()){
         		bTemp.setBackground(Color.GREEN);

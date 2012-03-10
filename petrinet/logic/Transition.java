@@ -1,25 +1,31 @@
 package petrinet.logic;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Transition
 extends PetrinetObject{
 
-    protected Transition(String name) {
+    public Transition(String name) {
         super(name);
+
     }
 
     private List<Arc> incoming = new ArrayList<Arc>();
     private List<Arc> outgoing = new ArrayList<Arc>();
+
+	
     
     /**
-     * @return True if this transition has all of its requirements met, such that it can fire
+     * @return darf die Transition feuern?
      */
     public boolean canFire() {
         boolean canFire = true;
         
-        canFire = !this.isNotConnected();
+        // ich denke, dass auch eine Transition, 
+        // die nur auf einer Seite Kanten hat, feuern darf
+        canFire = ! this.isNotConnected();
         
         for (Arc arc : incoming) {
             canFire = canFire & arc.canFire();
@@ -32,7 +38,7 @@ extends PetrinetObject{
     }
     
     /**
-     * Fires all arcs coming in and going out of the transition
+     * Transition soll feuern
      */
     public void fire() {
         for (Arc arc : incoming) {
@@ -45,21 +51,21 @@ extends PetrinetObject{
     }
     
     /**
-     * @param arc Add this arc to the list of objects leading into the transition
+     * @param arc Eingehende Kante hinzufügen
      */
     public void addIncoming(Arc arc) {
         this.incoming.add(arc);
     }
     
     /**
-     * @param arc Add this arc to the list of objects leaving the transition
+     * @param arc ausgehende Kante hinzufügen
      */
     public void addOutgoing(Arc arc) {
         this.outgoing.add(arc);
     }
 
     /**
-     * @return True if there is nothing connected to this transition
+     * @return ist die Transition mit keiner Kante verbunden?
      */
     public boolean isNotConnected() {
         return incoming.isEmpty() && outgoing.isEmpty();
@@ -67,9 +73,7 @@ extends PetrinetObject{
     
     @Override
     public String toString() {
-        return super.toString() + 
-               (isNotConnected() ? " IS NOT CONNECTED" : "" ) +
-               (canFire()? " READY TO FIRE" : "");
+        return super.toString();
     }
     
 }
