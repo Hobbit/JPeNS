@@ -131,7 +131,12 @@ class Importer
 							System.out.printf("We are making an are from %s to %s", pn.getTransition(arc.ToName).getName(), pn.getPlace(arc.FromName).getName());
 							pn.arc(arc.Name, pn.getTransition(arc.FromName), pn.getPlace(arc.ToName));
 						}
-						
+						else
+                        {
+                            System.out.println("This arc " + arc.Name + " is invalid. It must go from a place -> transition or transition -> place.");
+                            System.exit(1);
+                        }
+
 						if (PRINT_DIAG_INFO == true)
 						{
 			                System.out.println("=====================\nArc: ");
