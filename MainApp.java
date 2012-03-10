@@ -9,7 +9,7 @@ public class MainApp
     public static void main(String[] args) {
         Petrinet pn = new Petrinet("MyNet");
 
-		String filePath = "data.xml";
+		String filePath = "src/data.xml";
 		// At this point our importer should be modifying the existing pn Petrinet object
 		Importer importer = new Importer(filePath, pn);
 

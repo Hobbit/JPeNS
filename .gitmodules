@@ -1,3 +1,0 @@
-[submodule "external"]
-	path = external
-	url = git@github.com:kd7iwp/simple-java-petrinet.git
