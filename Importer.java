@@ -83,7 +83,7 @@ class Importer
 			                System.out.println("Name: " + tran.Name);
 						}
 						// Add this transition to our Petrinet
-						pn.transition(tran.Name);
+						pn.addTransition(tran.Name);
 					}
 			    } 
 				else 
@@ -104,7 +104,7 @@ class Importer
 							System.out.println("Tokens: " + place.Tokens);
 						}
 						// Add this place to our Petrinet
-						pn.place(place.Name, place.Tokens);
+						pn.addPlace(place.Name, place.Tokens);
 			        }
 			    } 
 				else 
@@ -121,12 +121,12 @@ class Importer
 						if (arc.FromType.equalsIgnoreCase("place") && arc.ToType.equalsIgnoreCase("transition"))
 						{
 							// Add this arc to our Petrinet coming from a place to a transition
-							pn.arc(arc.Name, pn.getPlace(arc.FromName), pn.getTransition(arc.ToName));							
+							pn.addArc(arc.Name, pn.getPlace(arc.FromName), pn.getTransition(arc.ToName));							
 						}
 						else if (arc.FromType.equalsIgnoreCase("transition") && arc.ToType.equalsIgnoreCase("place"))
 						{
 							// Add this arc to our Petrinet coming from a transition to a place
-							pn.arc(arc.Name, pn.getTransition(arc.FromName), pn.getPlace(arc.ToName));
+							pn.addArc(arc.Name, pn.getTransition(arc.FromName), pn.getPlace(arc.ToName));
 						}
 						else
                         {

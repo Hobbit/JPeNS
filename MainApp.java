@@ -1,8 +1,4 @@
-import petrinet.gui.*;
-import petrinet.logic.Arc;
 import petrinet.logic.Petrinet;
-import petrinet.logic.Place;
-import petrinet.logic.Transition;
 
 public class MainApp
 {
