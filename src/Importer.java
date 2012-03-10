@@ -15,7 +15,7 @@ import petrinet.logic.Arc;
 
 class Importer
 {
-	private final boolean PRINT_DIAG_INFO = true;
+	private final boolean PRINT_DIAG_INFO = false;
 	
 	public Importer(String filepath, Petrinet pn)
 	{
@@ -118,17 +118,14 @@ class Importer
 				{
 			        for (ArcNode arc : arcs) 
 					{
-						System.out.printf("\n\nWe have an arc whose FromType = %s and ToType = %s\n\n", arc.FromType, arc.ToType);
 						if (arc.FromType.equalsIgnoreCase("place") && arc.ToType.equalsIgnoreCase("transition"))
 						{
 							// Add this arc to our Petrinet coming from a place to a transition
-							System.out.printf("We are making an are from %s to %s", pn.getPlace(arc.FromName).getName(), pn.getTransition(arc.ToName).getName());
 							pn.arc(arc.Name, pn.getPlace(arc.FromName), pn.getTransition(arc.ToName));							
 						}
 						else if (arc.FromType.equalsIgnoreCase("transition") && arc.ToType.equalsIgnoreCase("place"))
 						{
 							// Add this arc to our Petrinet coming from a transition to a place
-							System.out.printf("We are making an are from %s to %s", pn.getTransition(arc.ToName).getName(), pn.getPlace(arc.FromName).getName());
 							pn.arc(arc.Name, pn.getTransition(arc.FromName), pn.getPlace(arc.ToName));
 						}
 						else
@@ -294,7 +291,7 @@ class ArcNode
 	public String FromName;
 	public String FromType;
 	
-	public ArcNode(String name, String toName, String toType, String fromName, String fromType)
+	public ArcNode(String name, String fromName, String fromType, String toName, String toType)
 	{
 		Name = name;
 		ToName = toName;
