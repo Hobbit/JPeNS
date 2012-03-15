@@ -106,25 +106,6 @@ public class PetrinetGUI extends JFrame {
     Petrinet pn;
     List<Transition> tList = null;
     TransitionButton[] buttons = null;
-
- /*   public PetrinetGUI(Petrinet pn) {
-        super(pn.getName());
-        this.pn = pn;
-//        this.setLayout(new FlowLayout());
-        this.setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
-        for (Transition t : pn.getTransitions()) {
-            TransitionButton button = new TransitionButton(t);
-            add(button);
-            button.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    repaint();
-                }});
-        }
-        for (Place p : pn.getPlaces()) {
-            add(new PlaceLabel(p));
-        }
-    }*/
     
     public void refreshButtons(TransitionButton[] buttonArr, List<Transition> trans){
     	for(int i = 0; i < buttonArr.length; i++){
