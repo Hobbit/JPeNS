@@ -17,13 +17,12 @@ extends PetrinetObject{
 	
     
     /**
-     * @return darf die Transition feuern?
+     * Checks if the transition is able to fire
      */
     public boolean canFire() {
         boolean canFire = true;
         
-        // ich denke, dass auch eine Transition, 
-        // die nur auf einer Seite Kanten hat, feuern darf
+        //If the transition is not connected, sets canFire to false 
         canFire = ! this.isNotConnected();
         
         for (Arc arc : incoming) {
@@ -37,7 +36,7 @@ extends PetrinetObject{
     }
     
     /**
-     * Transition soll feuern
+     * Fire the transition
      */
     public void fire() {
         for (Arc arc : incoming) {
@@ -50,21 +49,21 @@ extends PetrinetObject{
     }
     
     /**
-     * @param arc Eingehende Kante hinzufügen
+     * Add incoming arc
      */
     public void addIncoming(Arc arc) {
         this.incoming.add(arc);
     }
     
     /**
-     * @param arc ausgehende Kante hinzufügen
+     * Add outgoing arc
      */
     public void addOutgoing(Arc arc) {
         this.outgoing.add(arc);
     }
 
     /**
-     * @return ist die Transition mit keiner Kante verbunden?
+     * Checks if it is connected, returns boolean
      */
     public boolean isNotConnected() {
         return incoming.isEmpty() && outgoing.isEmpty();

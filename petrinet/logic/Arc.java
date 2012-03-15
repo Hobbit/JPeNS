@@ -1,10 +1,8 @@
 package petrinet.logic;
 
 /**
- * Eine Kante geht von einer Stelle zu einer Transition oder umgekehrt.
- * Das wird Ÿber die Konstruktoren abgebildet.
- * 
- * @author rmetzler
+ * An edge goes from one place to a transition or vice versa.
+ * Overloaded constructors determine if it is a 'to' or 'from' arc
  */
 public class Arc
 extends PetrinetObject {
@@ -17,7 +15,7 @@ extends PetrinetObject {
     enum Direction {
         
         /**
-         * Die 2 Richtungen, die so eine Kante haben darf
+         * The two directions, which may have such an edge
          */
         
         PLACE_TO_TRANSITION {

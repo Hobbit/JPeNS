@@ -9,9 +9,9 @@ public class Zaehler {
 
 
     /**
-     * Zaehlt einmal von 0 bis 7.
+     * Counts from 0 to 5.
      *
-     * jeweilige (Zaehler-) Stelle wird markiert
+     * Each counter itteration is a transition
      *
      * @param args
      */

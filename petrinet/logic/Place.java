@@ -20,7 +20,7 @@ extends PetrinetObject {
     }
 
     /**
-     * besitzt die Stelle mindestens so viele tokens?
+     * Checks if it the place has atleast a certain number of tokens
      * 
      * @param threshold
      * @return
@@ -30,7 +30,7 @@ extends PetrinetObject {
     }
 
     /**
-     * würde die Stelle noch so viele Tokens aufnehmen können?
+     * Checks if the place has room for more tokens
      * 
      * @param newTokens
      * @return
