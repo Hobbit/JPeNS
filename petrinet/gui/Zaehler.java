@@ -25,18 +25,18 @@ public class Zaehler {
         Transition t0 = null;
 
         for (int i = 0; i < 8 ; i++) {
-            Transition t = pn.transition("Transition #" + i);
+            Transition t = pn.addTransition("Transition #" + i);
             if (null != vorgaenger) {
-                Arc a = pn.arc("Arc", vorgaenger, t);
+                Arc a = pn.addArc("Arc", vorgaenger, t);
             }
             if (0 == i) {
                 t0 = t;
             }
 
-            Place p = pn.place("Place #" + i);
+            Place p = pn.addPlace("Place #" + i);
             p.setMaxTokens(1);
-            Arc a = pn.arc("Arc", t, p);
-            pn.inhibitor("inhibitor", p, t0);
+            Arc a = pn.addArc("Arc", t, p);
+            pn.addInhibitorArc("inhibitor", p, t0);
 
             vorgaenger = p;
         }

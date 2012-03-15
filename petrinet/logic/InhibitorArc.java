@@ -9,8 +9,7 @@ extends Arc {
     }
 
     /**
-     * Es darf nur gefeuert werden,
-     * wenn weniger Token als dsa Inhibitor-Gewicht auf der Stelle liegen
+     * It may only be fired if fewer tokens are in the place than the weight of the inhibiter
      */
     
     @Override
@@ -19,7 +18,7 @@ extends Arc {
     }
     
     /**
-     * beim feuern einer Inhibitor-Kante gehen keine Tokens die Kante entlang
+     * The firing of an inhibiter edge does not do anything
      */
     @Override
     public void fire() {
