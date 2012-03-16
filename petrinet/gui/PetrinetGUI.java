@@ -25,12 +25,15 @@ import petrinet.logic.Transition;
 
 public class PetrinetGUI extends JFrame {
 
+	final Color CAN_FIRE = Color.green;
+	final Color NORMAL = Color.orange;
+	final Color UNCONNECTED = Color.gray;
 
 	/**
 	 * Extends JLabel and provides the name of a place as a label
 	 */
 	public class PlaceLabel extends JLabel {
-
+		
         private Place place;
 
         /**
@@ -111,11 +114,11 @@ public class PetrinetGUI extends JFrame {
     	for(int i = 0; i < buttonArr.length; i++){
     		Transition tTemp = trans.get(i);
     		if(tTemp.canFire()){
-    			buttonArr[i].setBackground(Color.GREEN);
+    			buttonArr[i].setBackground(CAN_FIRE);
         	}else if(tTemp.isNotConnected()){
-        		buttonArr[i].setBackground(Color.GRAY);
+        		buttonArr[i].setBackground(UNCONNECTED);
         	}else{
-        		buttonArr[i].setBackground(Color.ORANGE);
+        		buttonArr[i].setBackground(NORMAL);
         	}
     		buttonArr[i].repaint();
     		System.out.println("Repainted:"+buttonArr[i].toString());
@@ -143,11 +146,11 @@ public class PetrinetGUI extends JFrame {
         	Transition tTemp = tList.get(i);
         	TransitionButton bTemp = buttons[i];
         	if(tTemp.canFire()){
-        		bTemp.setBackground(Color.GREEN);
+        		bTemp.setBackground(CAN_FIRE);
         	}else if(tTemp.isNotConnected()){
-        		bTemp.setBackground(Color.GRAY);
+        		bTemp.setBackground(UNCONNECTED);
         	}else{
-        		bTemp.setBackground(Color.ORANGE);
+        		bTemp.setBackground(NORMAL);
         	}
         	
             buttons[i].addActionListener(new ActionListener() {
