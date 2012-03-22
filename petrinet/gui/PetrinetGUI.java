@@ -25,6 +25,10 @@ import petrinet.logic.Transition;
 
 public class PetrinetGUI extends JFrame {
 
+    Petrinet pn;
+    List<Transition> tList = null;
+    TransitionButton[] buttons = null;
+    
 	final Color CAN_FIRE = Color.green;
 	final Color NORMAL = Color.orange;
 	final Color UNCONNECTED = Color.gray;
@@ -36,10 +40,6 @@ public class PetrinetGUI extends JFrame {
 		
         private Place place;
 
-        /**
-         * 
-         * @param place A place for this label
-         */
         public PlaceLabel(Place place) {
             super(place.toString());
             this.place = place;
@@ -54,6 +54,13 @@ public class PetrinetGUI extends JFrame {
                 return null;
             }
             return place.toString();
+        }
+        
+        /**
+         * @return The number of tokens at this place
+         */
+        public int getTokens() {
+        	return place.getTokens();
         }
     }
 
@@ -78,15 +85,15 @@ public class PetrinetGUI extends JFrame {
                         refreshButtons(buttons, tList);
                     }
                     if(transition.canFire()){
-                		setBackground(Color.GREEN);
+                		setBackground(CAN_FIRE);
                 	}else if(transition.isNotConnected()){
-                		setBackground(Color.GRAY);
+                		setBackground(UNCONNECTED);
                 	}else{
-                		setBackground(Color.ORANGE);
+                		setBackground(NORMAL);
                 	}
                     repaint();
-                }});
-
+                }
+            });
         }
 
         public boolean isEnabled() {
@@ -106,10 +113,6 @@ public class PetrinetGUI extends JFrame {
     }
 
 
-    Petrinet pn;
-    List<Transition> tList = null;
-    TransitionButton[] buttons = null;
-    
     public void refreshButtons(TransitionButton[] buttonArr, List<Transition> trans){
     	for(int i = 0; i < buttonArr.length; i++){
     		Transition tTemp = trans.get(i);
@@ -122,22 +125,30 @@ public class PetrinetGUI extends JFrame {
         	}
     		buttonArr[i].repaint();
     		System.out.println("Repainted:"+buttonArr[i].toString());
-    	}
-    	
+    	}    	
     }
     
     public PetrinetGUI(Petrinet pn) {
+    	// Create a new JFrame
         super(pn.getName());
         this.pn = pn;
         tList = pn.getTransitions();
         List<Place> p = pn.getPlaces();
         Container contentPane = getContentPane();
         JPanel transPan = new JPanel(); 
-        JPanel places = new JPanel(new GridBagLayout());;
-        GridBagConstraints c = new GridBagConstraints();
-        places.setBorder(BorderFactory.createLineBorder(Color.black));
-
+        JPanel placesPan = new JPanel(new GridBagLayout());
+        placesPan.setBorder(BorderFactory.createLineBorder(Color.black));
+        JLabel placesTitle = new JLabel("Places");
         
+        // Create a GridBagConstraints object for laying out the title and used later for places
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = 1;
+        c.ipadx = 10;
+        c.ipady = 10;
+        
+        placesPan.add(placesTitle, c);
+
         buttons = new TransitionButton[tList.size()];
         PlaceLabel[] labels = new PlaceLabel[p.size()];
         for (int i = 0; i < tList.size(); i++) {
@@ -153,6 +164,7 @@ public class PetrinetGUI extends JFrame {
         		bTemp.setBackground(NORMAL);
         	}
         	
+        	// Repaint all of the transition buttons after an event
             buttons[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	for (TransitionButton b : buttons) {
@@ -160,20 +172,38 @@ public class PetrinetGUI extends JFrame {
                 	}
 
                     repaint();
-                }});
+                }
+            });
         }
         contentPane.add("North", transPan );
+        
+        int lineNum = 0;
+        
+        // Add all of the placelabels to the placesPan for display
         for (int n = 0; n < p.size(); n++ ) {
-       		labels[n] = new PlaceLabel(p.get(n));       		
+       		labels[n] = new PlaceLabel(p.get(n));   
+       		c = new GridBagConstraints();
        		c.gridx = 1;
-       		c.gridy = (n+1);
+       		c.gridy = lineNum;
+       		c.ipadx = 10;
+       		c.ipady = 10;
        		
-       		places.add(labels[n],c);
+       		placesPan.add(labels[n],c);
+   			//c.ipadx = 5;
+   			//c.ipady = 5;
+   			lineNum++;
+       		c.gridy = lineNum; // We want to put the dots on the next line
+       		
+       		for (int m = 0; m < labels[n].getTokens(); m++) {
+       			c.gridx = 2 + m;
+	       		// Create a dot for each place in this placelabel
+	       		CirclePanel myCircle = new CirclePanel(Color.gray, Color.red, 3, 3);
+	       		placesPan.add(myCircle, c);
+       		}
+       		lineNum++;
         }
-        contentPane.add("West", places);
+        contentPane.add("West", placesPan);
     }
-
-
 
     public static void displayPetrinet(final Petrinet pn) {
 
@@ -183,7 +213,10 @@ public class PetrinetGUI extends JFrame {
 
                 // Exit the application when the window is closed
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+                
+                // Center the window
+                window.setLocationRelativeTo(null);
+                
                 // Set the window size
                 window.setSize(800, 600);
                 window.setVisible(true);
