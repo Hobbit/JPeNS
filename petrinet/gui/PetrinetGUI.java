@@ -3,6 +3,8 @@ package petrinet.gui;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -133,6 +135,10 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		JPanel placesPanel = new JPanel(new GridBagLayout());
 		placesPanel.setBorder(BorderFactory.createLineBorder(BORDERS));
 		JLabel placesTitle = new JLabel("Places");
+		
+		transitionsPanel.setLayout(new FlowLayout());
+		transitionsPanel.setBounds(0, 0, contentPane.getWidth(), contentPane.getHeight());
+		transitionsPanel.setSize(contentPane.getWidth(), contentPane.getHeight());
 		
 		//Top menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -295,6 +301,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Exit the application when the window is closed				
 				window.setLocation(50, 50); 				
 				window.setSize(800,600);//Set window size
+				window.setMinimumSize(new Dimension(500, 500));
 				window.setVisible(true); //Set window to visible
 			}
 		};
