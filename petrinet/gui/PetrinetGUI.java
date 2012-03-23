@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -21,6 +22,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.*;
 
 import petrinet.logic.Petrinet;
 import petrinet.logic.Place;
@@ -231,10 +233,11 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		
 		if(buttonString.equals("New")){
 			//To be implemented
-			JOptionPane.showMessageDialog(null, "We are still working on implementing the new network feature");
+			JOptionPane.showMessageDialog(PetrinetGUI.this, "We are still working on implementing the new network feature");
 		}else if(buttonString.equals("Import")){
-			//To be implemented
-			JOptionPane.showMessageDialog(null, "We are still working on implementing the import feature");
+			//To be implemented fully
+			JFileChooser fileBrowser = new JFileChooser();
+			fileBrowser.showOpenDialog(PetrinetGUI.this);
 		}else if(buttonString.equals("Quit")){
 			//create a new quit confirmation window
 	    	confirm = new JFrame("Quit?");
