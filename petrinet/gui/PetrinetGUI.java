@@ -2,10 +2,13 @@ package petrinet.gui;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -146,6 +149,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         hEmpty.setBackground(NORMAL);
         JMenuItem hUnconnect = new JMenuItem("Unconnected");
         hUnconnect.setBackground(UNCONNECTED);
+        JMenuItem homepage = new JMenuItem("Homepage");
         
         //File menu items with action listeners
         menuBar.add(file);
@@ -162,6 +166,8 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         help.add(hFire);
         help.add(hEmpty);
         help.add(hUnconnect);
+        help.add(homepage);
+        homepage.addActionListener(this);
         
 		//Create a GridBagConstraints object for laying out the title and used later for places
 		GridBagConstraints c = new GridBagConstraints();
@@ -267,6 +273,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		}else if(buttonString.equals("No")){
 			//Confirm no, destroy confirmation window and continue with program
 			confirm.dispose();
+		}else if(buttonString.equals("Homepage")){
+			try {
+				Desktop.getDesktop().browse(URI.create("https://github.com/Hobbit/JPeNS"));
+			} catch (IOException e1) {
+				System.out.println("**ERROR: Could not open homepage");
+			}
 		}else{
 			//catch-all
 			System.out.println("Unexpected error.");
