@@ -131,15 +131,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		
 		//Main container and panels
 		Container contentPane = getContentPane();
-		JPanel transitionsPanel = new JPanel();
+		JPanel transitionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel placesPanel = new JPanel(new GridBagLayout());
 		placesPanel.setBorder(BorderFactory.createLineBorder(BORDERS));
 		JLabel placesTitle = new JLabel("Places");
 		
-		transitionsPanel.setLayout(new FlowLayout());
-		transitionsPanel.setBounds(0, 0, contentPane.getWidth(), contentPane.getHeight());
-		transitionsPanel.setSize(contentPane.getWidth(), contentPane.getHeight());
-		
+	
 		//Top menu bar
 		JMenuBar menuBar = new JMenuBar();
 		
