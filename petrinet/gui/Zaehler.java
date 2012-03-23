@@ -41,6 +41,6 @@ public class Zaehler {
             vorgaenger = p;
         }
 
-        PetrinetGUI.displayPetrinet(pn);
+        xxxPetrinetGUI.displayPetrinet(pn);
     }
 }
