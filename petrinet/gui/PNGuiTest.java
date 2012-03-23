@@ -24,7 +24,7 @@ public class PNGuiTest {
         
         InhibitorArc inhibitor = pn.addInhibitorArc("inhibitor", p3, t1);
 
-        xxxPetrinetGUI.displayPetrinet(pn);
+        PetrinetGUI.displayPetrinet(pn);
     }
     
 }

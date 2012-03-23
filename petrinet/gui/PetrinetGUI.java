@@ -172,7 +172,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		//Create a GridBagConstraints object for laying out the title and used later for places
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 1;
-		c.gridy = 1;
+		c.gridy = 0;
 		c.ipadx = 10;
 		c.ipady = 10;
 		
@@ -198,7 +198,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		}
 		contentPane.add("North", transitionsPanel);
 		
-		int lineNumber = 0;
+		int lineNumber = 1;
 		// Add all of the PlaceLabels to the placesPanel for display
 		for(int i = 0; i < pList.size(); i++){
 			labels[i] = new PlaceLabel(pList.get(i));
