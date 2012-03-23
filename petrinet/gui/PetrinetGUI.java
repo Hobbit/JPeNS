@@ -150,11 +150,16 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         JMenu help = new JMenu("Help");
         JMenuItem hFire = new JMenuItem("Can fire");
         hFire.setBackground(CAN_FIRE);
+        hFire.setEnabled(false);
         JMenuItem hEmpty = new JMenuItem("Empty");
         hEmpty.setBackground(NORMAL);
+        hEmpty.setEnabled(false);
         JMenuItem hUnconnect = new JMenuItem("Unconnected");
         hUnconnect.setBackground(UNCONNECTED);
+        hUnconnect.setEnabled(false);
         JMenuItem homepage = new JMenuItem("Homepage");
+        
+       
         
         //File menu items with action listeners
         menuBar.add(file);
