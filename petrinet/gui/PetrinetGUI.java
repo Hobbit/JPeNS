@@ -47,11 +47,8 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	 * Extends JButton to manage transitions when the user clicks to fire a transition
 	 */
 
-	@SuppressWarnings("serial")
 	public class TransitionButton extends JButton{
 		private Transition transition;
-		private PetrinetGUI parentNet;
-		
 		/**
 		 * Default constructor for Transition Buttons
 		 * @param transition
@@ -67,7 +64,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 						fireStateChanged();
 						refreshScreen();
 					}			
-				}
+				} 
 			});
 		}
 		
@@ -121,22 +118,36 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		super(pn.getName());
 		this.pn = pn;
 		
+		//Loads lists with the petrinet's transitions and places
 		tList = pn.getTransitions();
 		pList = pn.getPlaces();
 		
+		//Main container and panels
 		Container contentPane = getContentPane();
 		JPanel transitionsPanel = new JPanel();
 		JPanel placesPanel = new JPanel(new GridBagLayout());
 		placesPanel.setBorder(BorderFactory.createLineBorder(BORDERS));
 		JLabel placesTitle = new JLabel("Places");
 		
+		//Top menu bar
 		JMenuBar menuBar = new JMenuBar();
+		
+		//File menu
         JMenu file = new JMenu("File");
         JMenuItem newP = new JMenuItem("New");
         JMenuItem importP = new JMenuItem("Import");
         JMenuItem quit = new JMenuItem("Quit");
         
-        //Menu items with acction listeners
+        //Help menu
+        JMenu help = new JMenu("Help");
+        JMenuItem hFire = new JMenuItem("Can fire");
+        hFire.setBackground(CAN_FIRE);
+        JMenuItem hEmpty = new JMenuItem("Empty");
+        hEmpty.setBackground(NORMAL);
+        JMenuItem hUnconnect = new JMenuItem("Unconnected");
+        hUnconnect.setBackground(UNCONNECTED);
+        
+        //File menu items with action listeners
         menuBar.add(file);
         file.add(newP);
         file.add(importP);
@@ -146,7 +157,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         importP.addActionListener(this);
         quit.addActionListener(this);
         
-		
+        //Help menu
+        menuBar.add(help);
+        help.add(hFire);
+        help.add(hEmpty);
+        help.add(hUnconnect);
+        
 		//Create a GridBagConstraints object for laying out the title and used later for places
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 1;
@@ -156,9 +172,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		
 		placesPanel.add(placesTitle, c);
 		
+		//Initialize buttons and labels arrays
 		buttons = new TransitionButton[tList.size()];
 		labels = new PlaceLabel[pList.size()];
 		
+		//Steps through each transition and creates a new button and initializes
+		//it to the appropriate status color.
 		for(int i = 0; i < tList.size(); i++){
 			buttons[i] = new TransitionButton(tList.get(i));
 			transitionsPanel.add(buttons[i]);
@@ -174,7 +193,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		contentPane.add("North", transitionsPanel);
 		
 		int lineNumber = 0;
-		// Add all of the PlaceLabels to the placesPanel for dispaly
+		// Add all of the PlaceLabels to the placesPanel for display
 		for(int i = 0; i < pList.size(); i++){
 			labels[i] = new PlaceLabel(pList.get(i));
 			c = new GridBagConstraints();
@@ -197,15 +216,21 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		}
 		contentPane.add("West", placesPanel);		
 	}
-
+	
+	/**
+	 * This method catches the action listeners and performs the specified actions
+	 */
 	public void actionPerformed(ActionEvent e){
 		String buttonString = e.getActionCommand( );
 		
 		if(buttonString.equals("New")){
+			//To be implemented
 			JOptionPane.showMessageDialog(null, "We are still working on implementing the new network feature");
 		}else if(buttonString.equals("Import")){
+			//To be implemented
 			JOptionPane.showMessageDialog(null, "We are still working on implementing the import feature");
 		}else if(buttonString.equals("Quit")){
+			//create a new quit confirmation window
 	    	confirm = new JFrame("Quit?");
 	    	confirmYes = new JButton("Yes");
 	     	confirmNo = new JButton("No");
@@ -215,6 +240,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	    	confirmLabel = new JLabel("Quit? Are you sure?");
 	    	GridBagConstraints c = new GridBagConstraints();
 	    	
+	    	//Confirmation window constraints
 	    	c.gridx=1;
 	    	c.gridy=3;
 	    	confirm.add(confirmYes,c);
@@ -225,6 +251,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	    	c.gridy=1;
 	    	c.gridwidth=3;
 	    	
+	    	//Initialize the window
 	    	confirm.add(confirmLabel,c);
 	    	confirmLabel.setVisible(true);
 	    	confirmYes.addActionListener(this);
@@ -235,10 +262,13 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	    	confirm.setLocation(200, 100);
 	        	
 		}else if(buttonString.equals("Yes")){
+			//Confirm yes, quit
 			System.exit(0);
 		}else if(buttonString.equals("No")){
+			//Confirm no, destroy confirmation window and continue with program
 			confirm.dispose();
 		}else{
+			//catch-all
 			System.out.println("Unexpected error.");
 	    }
 	}
@@ -246,11 +276,11 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	public static void displayPetrinet(final Petrinet pn){
 		Runnable guiCreator = new Runnable(){
 			public void run(){
-				JFrame window = new PetrinetGUI(pn);				
+				JFrame window = new PetrinetGUI(pn); //Creates new PetrinetGUI object				
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Exit the application when the window is closed				
 				window.setLocation(50, 50); 				
 				window.setSize(800,600);//Set window size
-				window.setVisible(true);
+				window.setVisible(true); //Set window to visible
 			}
 		};
 		SwingUtilities.invokeLater(guiCreator);
