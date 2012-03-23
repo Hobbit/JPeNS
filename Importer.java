@@ -7,7 +7,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
  
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import petrinet.logic.Petrinet;
@@ -77,7 +76,7 @@ class Importer
 				{
 					for (TransitionNode tran : transitions)
 					{
-						if (PRINT_DIAG_INFO == true)
+						if (PRINT_DIAG_INFO)
 						{
 							System.out.println("=====================\nTransition: ");
 			                System.out.println("Name: " + tran.Name);
@@ -97,7 +96,7 @@ class Importer
 				{
 			        for (PlaceNode place : places) 
 					{
-						if (PRINT_DIAG_INFO == true)
+						if (PRINT_DIAG_INFO)
 						{
 			                System.out.println("=====================\nPlace: ");
 							System.out.println("Name: " + place.Name);
@@ -134,7 +133,7 @@ class Importer
                             System.exit(1);
                         }
 
-						if (PRINT_DIAG_INFO == true)
+						if (PRINT_DIAG_INFO)
 						{
 			                System.out.println("=====================\nArc: ");
 							System.out.println("Name: " + arc.Name);

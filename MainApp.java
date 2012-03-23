@@ -8,7 +8,6 @@ public class MainApp
 		String filePath = "src/data.xml";
 		// At this point our importer should be modifying the existing pn Petrinet object
 		Importer importer = new Importer(filePath, pn);
-
         // Transition t1 = pn.transition("t1");
         // Transition t2 = pn.transition("t2");
         // 
