@@ -38,6 +38,9 @@ import petrinet.logic.Transition;
 
 import att.grappa.*;
 
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph;
+
 @SuppressWarnings("serial")
 public class PetrinetGUI extends JFrame implements ActionListener{
 	
@@ -245,62 +248,18 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		/*
 		 * Add the GraphViz frame here
 		 */
+		mxGraph graph = new mxGraph();
 		
-		String myPath = "src/sample.gv";//"src/SmallGraph.gv"; 
-		InputStream input = null;
-		try {
-			input = new FileInputStream(myPath);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Parser program = new Parser(input, System.err);
-		try {
-		    //program.debug_parse(4);
-		    program.parse();
-		} catch(Exception ex) {
-		    System.err.println("Exception: " + ex.getMessage());
-		    ex.printStackTrace(System.err);
-		    System.exit(1);
-		}
-		Graph graph = null;
+	    Object defaultParent = graph.getDefaultParent();
+	    graph.getModel().beginUpdate();
+	    Object v1 = graph.insertVertex(defaultParent, null, "Hello", 20, 20, 80, 30);
+	    Object v2 = graph.insertVertex(defaultParent, null, "World", 240, 150, 80, 30);
+	    graph.insertEdge(defaultParent, null, "Edge", v1, v2);
+	    graph.getModel().endUpdate();
+	    
+	    JGraphPanel graphPan = new JGraphPanel(graph);
 
-		graph = program.getGraph();
-				
-		// Run the dot process to create an image of the graph
-//		ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/dot", "-Tpng", "-o outfile.png");
-//		builder.redirectErrorStream(true);
-//		Process p = builder.start(); 
-//		
-//		// Print the graph text to the input stream of the dot process
-//		graph.printGraph(p.getOutputStream());
-//		
-//		p.getOutputStream().flush();
-		
-//		File directory = new File(".");
-//		System.out.println(directory.getCanonicalPath());
-//		System.out.println(directory.getAbsolutePath());
-//		
-//		File myImage = new File("/home/jonathan/DropBox/mycode/cmpt166/workspace/JPeNS/outfile.png");
-//		System.out.printf("\nDoes the file exist? %b\n", myImage.isFile());
-//		BufferedImage graphImg = ImageIO.read(myImage);
-//		JLabel picLabel = new JLabel(new ImageIcon(graphImg));
-//		contentPane.add("Center", picLabel);
-		
-		
-		
-		System.err.println("The graph contains " + graph.countOfElements(Grappa.NODE|Grappa.EDGE|Grappa.SUBGRAPH) + " elements.");
-
-		graph.setEditable(true);
-		//graph.setMenuable(true);
-		graph.setErrorWriter(new PrintWriter(System.err,true));
-		//graph.printGraph(new PrintWriter(System.out));
-
-		System.err.println("bbox=" + graph.getBoundingBox().getBounds().toString());
-
-		//frame = new DemoFrame(graph);
-		contentPane.add("Center", new GraphFrame(graph).gp);
+	    contentPane.add("Center", graphPan.graphPanel);
 	}
 	
 	/**
