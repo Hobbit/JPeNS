@@ -267,14 +267,14 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		graph = program.getGraph();
 				
 		// Run the dot process to create an image of the graph
-		ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/dot", "-Tpng", "-o outfile.png");
-		builder.redirectErrorStream(true);
-		Process p = builder.start(); 
-		
-		// Print the graph text to the input stream of the dot process
-		graph.printGraph(p.getOutputStream());
-		
-		p.getOutputStream().flush();
+//		ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/dot", "-Tpng", "-o outfile.png");
+//		builder.redirectErrorStream(true);
+//		Process p = builder.start(); 
+//		
+//		// Print the graph text to the input stream of the dot process
+//		graph.printGraph(p.getOutputStream());
+//		
+//		p.getOutputStream().flush();
 		
 //		File directory = new File(".");
 //		System.out.println(directory.getCanonicalPath());
