@@ -244,7 +244,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		 * Add the GraphViz frame here
 		 */
 		
-		String myPath = "src/SmallGraph.gv"; //"src/sample.gv";
+		String myPath = "src/sample.gv";//"src/SmallGraph.gv"; 
 		InputStream input = null;
 		try {
 			input = new FileInputStream(myPath);

@@ -15,6 +15,7 @@ public class Petrinet extends PetrinetObject {
     List<Transition> transitions    = new ArrayList<Transition>();
     List<Arc> arcs                  = new ArrayList<Arc>();
     List<InhibitorArc> inhibitors   = new ArrayList<InhibitorArc>();
+    String filepath;
     
     // Default constructor
     public Petrinet(String name) {
@@ -197,5 +198,13 @@ public class Petrinet extends PetrinetObject {
     }
     public List<InhibitorArc> getInhibitorArcs() {
         return inhibitors;
+    }
+    
+    public String getFilepath(){
+    	return this.filepath;
+    }
+    
+    public void setFilepath(String newPath){
+    	this.filepath = newPath;
     }
 }
