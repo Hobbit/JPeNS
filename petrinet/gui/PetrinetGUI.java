@@ -9,11 +9,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.URI;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,9 +29,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.*;
 
+import petrinet.gui.GraphFrame;
 import petrinet.logic.Petrinet;
 import petrinet.logic.Place;
 import petrinet.logic.Transition;
+
+import att.grappa.*;
 
 @SuppressWarnings("serial")
 public class PetrinetGUI extends JFrame implements ActionListener{
@@ -120,8 +126,9 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	/**
 	 * Default constructor for the petrinet gui
 	 * @param pn
+	 * @throws IOException 
 	 */
-	public PetrinetGUI(Petrinet pn){
+	public PetrinetGUI(Petrinet pn) throws IOException{
 		super(pn.getName());
 		this.pn = pn;
 		
@@ -231,6 +238,67 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			lineNumber++;
 		}
 		contentPane.add("West", placesPanel);		
+		
+		
+		/*
+		 * Add the GraphViz frame here
+		 */
+		
+		String myPath = "src/SmallGraph.gv"; //"src/sample.gv";
+		InputStream input = null;
+		try {
+			input = new FileInputStream(myPath);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Parser program = new Parser(input, System.err);
+		try {
+		    //program.debug_parse(4);
+		    program.parse();
+		} catch(Exception ex) {
+		    System.err.println("Exception: " + ex.getMessage());
+		    ex.printStackTrace(System.err);
+		    System.exit(1);
+		}
+		Graph graph = null;
+
+		graph = program.getGraph();
+				
+		// Run the dot process to create an image of the graph
+		ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/dot", "-Tpng", "-o outfile.png");
+		builder.redirectErrorStream(true);
+		Process p = builder.start(); 
+		
+		// Print the graph text to the input stream of the dot process
+		graph.printGraph(p.getOutputStream());
+		
+		p.getOutputStream().flush();
+		
+//		File directory = new File(".");
+//		System.out.println(directory.getCanonicalPath());
+//		System.out.println(directory.getAbsolutePath());
+//		
+//		File myImage = new File("/home/jonathan/DropBox/mycode/cmpt166/workspace/JPeNS/outfile.png");
+//		System.out.printf("\nDoes the file exist? %b\n", myImage.isFile());
+//		BufferedImage graphImg = ImageIO.read(myImage);
+//		JLabel picLabel = new JLabel(new ImageIcon(graphImg));
+//		contentPane.add("Center", picLabel);
+		
+		
+		
+		System.err.println("The graph contains " + graph.countOfElements(Grappa.NODE|Grappa.EDGE|Grappa.SUBGRAPH) + " elements.");
+
+		graph.setEditable(true);
+		//graph.setMenuable(true);
+		graph.setErrorWriter(new PrintWriter(System.err,true));
+		//graph.printGraph(new PrintWriter(System.out));
+
+		System.err.println("bbox=" + graph.getBoundingBox().getBounds().toString());
+
+		//frame = new DemoFrame(graph);
+		contentPane.add("Center", new GraphFrame(graph).gp);
 	}
 	
 	/**
@@ -299,7 +367,13 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	public static void displayPetrinet(final Petrinet pn){
 		Runnable guiCreator = new Runnable(){
 			public void run(){
-				JFrame window = new PetrinetGUI(pn); //Creates new PetrinetGUI object				
+				JFrame window = new JFrame();
+				try {
+					window = new PetrinetGUI(pn);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} //Creates new PetrinetGUI object				
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Exit the application when the window is closed				
 				window.setLocation(50, 50); 				
 				window.setSize(800,600);//Set window size
