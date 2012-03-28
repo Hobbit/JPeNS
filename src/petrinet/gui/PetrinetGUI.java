@@ -11,14 +11,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -31,14 +28,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.*;
 
-import petrinet.gui.GraphFrame;
+import petrinet.logic.Arc;
 import petrinet.logic.Petrinet;
 import petrinet.logic.Place;
 import petrinet.logic.Transition;
 
-import att.grappa.*;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.view.mxGraph;
 
 @SuppressWarnings("serial")
@@ -54,6 +50,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	private Petrinet pn;
 	private List<Transition> tList = null;
 	private List<Place> pList = null;
+	private List<Arc> aList = null;
 	private TransitionButton[] buttons = null;
 	private PlaceLabel[] labels = null;
 	private JFrame confirm = null;
@@ -140,6 +137,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		//Loads lists with the petrinet's transitions and places
 		tList = pn.getTransitions();
 		pList = pn.getPlaces();
+		aList = pn.getArcs();
 		
 		//Main container and panels
 		Container contentPane = getContentPane();
@@ -246,20 +244,15 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		
 		
 		/*
-		 * Add the GraphViz frame here
+		 * Add the Graph layout frame here
 		 */
-		mxGraph graph = new mxGraph();
-		
-	    Object defaultParent = graph.getDefaultParent();
-	    graph.getModel().beginUpdate();
-	    Object v1 = graph.insertVertex(defaultParent, null, "Hello", 20, 20, 80, 30);
-	    Object v2 = graph.insertVertex(defaultParent, null, "World", 240, 150, 80, 30);
-	    graph.insertEdge(defaultParent, null, "Edge", v1, v2);
-	    graph.getModel().endUpdate();
-	    
-	    JGraphPanel graphPan = new JGraphPanel(graph);
+	    	    
+	    JGraphPanel graphPan = new JGraphPanel(pn);
 
-	    contentPane.add("Center", graphPan.graphPanel);
+	    contentPane.add("Center", graphPan.graphComponent);
+	    
+	    mxOrganicLayout organic = new mxOrganicLayout(graphPan.graph);
+	    organic.execute(graphPan.graph.getDefaultParent());
 	}
 	
 	/**
