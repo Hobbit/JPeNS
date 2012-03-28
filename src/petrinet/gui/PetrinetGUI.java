@@ -1,5 +1,7 @@
 package petrinet.gui;
 
+import src.Importer;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Desktop;
@@ -313,7 +315,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		}else if(buttonString.equals("Import")){
 			//To be implemented fully
 			JFileChooser fileBrowser = new JFileChooser();
-			fileBrowser.showOpenDialog(PetrinetGUI.this);
+			int returnVal = fileBrowser.showOpenDialog(PetrinetGUI.this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File newFile = fileBrowser.getSelectedFile();
+				Importer importer = new Importer(newFile, pn);
+		    }
+			
 		}else if(buttonString.equals("Quit")){
 			//create a new quit confirmation window
 	    	confirm = new JFrame("Quit?");
@@ -371,7 +378,6 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 				try {
 					window = new PetrinetGUI(pn);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} //Creates new PetrinetGUI object				
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Exit the application when the window is closed				
