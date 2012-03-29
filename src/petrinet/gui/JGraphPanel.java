@@ -1,11 +1,16 @@
 package petrinet.gui;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JPanel;
+
+import petrinet.logic.ArcEndType.EndType;
 
 import petrinet.logic.Arc;
 import petrinet.logic.Petrinet;
 import petrinet.logic.Place;
+import petrinet.logic.Transition;
 
 import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.swing.mxGraphComponent;
@@ -24,10 +29,18 @@ public class JGraphPanel  extends JPanel {
   
   public mxGraphComponent graphComponent;
   
-  final int VERTEX_WIDTH = 80;
-  final int VERTEX_HEIGHT = 30;
-  private ArrayList<Object> places = new ArrayList<Object>();
-  private ArrayList<Object> arcs = new ArrayList<Object>();
+  final int PLACE_WIDTH = 80;
+  final int PLACE_HEIGHT = 30;
+  final int TRANSITION_WIDTH = 80;
+  final int TRANSITION_HEIGHT = 30;
+  final String PLACE_STYLE = "strokeColor=red;fillColor=green";
+  final String TRANSITION_STYLE = "ROUNDED;strokeColor=green;fillColor=orange";
+  
+  private ArrayList<Arc> arcs = new ArrayList<Arc>();
+  
+  private Map<String, Object> placeVertices = new HashMap<String, Object>();
+  private Map<String, Object> transVertices = new HashMap<String, Object>();
+  //private ArrayList<Object> arcVertices = new ArrayList<Object>();
     
   public JGraphPanel(Petrinet pn) {
 	graph = new mxGraph();
@@ -40,10 +53,42 @@ public class JGraphPanel  extends JPanel {
 
     // For each place in the petrinet, add a vertex
     for (Place p : pn.getPlaces()) {
-    	Object vertex = graph.insertVertex(defaultParent, null, p.getName(), 0, 0, VERTEX_WIDTH, VERTEX_HEIGHT);
-    	places.add(vertex);
+    	Object vertex = graph.insertVertex(defaultParent, null, p.getName(), 0, 0, PLACE_WIDTH, PLACE_HEIGHT, PLACE_STYLE);
+    	placeVertices.put(p.getName(), vertex);
     }
-        
+    
+    // For each transition in the petrinet, add a vertex
+    for (Transition t : pn.getTransitions()) {
+    	Object vertex = graph.insertVertex(defaultParent, null, t.getName(), 0, 0, TRANSITION_WIDTH, TRANSITION_HEIGHT, TRANSITION_STYLE);
+    	transVertices.put(t.getName(), vertex);
+    }
+    
+    // For each place and transition draw the edges between them
+    for (Arc a : arcs) {
+    	Object from = null;
+    	Object to = null;
+    	
+    	// Retrieve the appropriate vertex for the from-node of the arc
+    	if (a.from == EndType.PLACE) {
+    		from = placeVertices.get(a.getPlace().getName());
+    	}
+    	else if (a.from == EndType.TRANSITION) {
+    		from = transVertices.get(a.getTransition().getName());
+    	}
+    		
+    	// Retrieve the appropriate vertex for the to-node of the arc
+    	if (a.to == EndType.PLACE) {
+    		to = placeVertices.get(a.getPlace().getName());
+    	}
+    	else if (a.to == EndType.TRANSITION) {
+    		to = transVertices.get(a.getTransition().getName());
+    	}
+    	
+    	graph.insertEdge(defaultParent, null, "Edge", from, to);
+    	
+    	System.out.println("Tried to make an arc from " + from.toString() + " to " + to.toString());
+    }
+    
     // For each arc, find the place it is going to and from, then make edges.
     
     graph.getModel().endUpdate();
