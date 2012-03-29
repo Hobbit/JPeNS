@@ -38,9 +38,9 @@ public class JGraphPanel  extends JPanel {
   
   private ArrayList<Arc> arcs = new ArrayList<Arc>();
   
+  // A way to store places and transitions that are retrievable by name
   private Map<String, Object> placeVertices = new HashMap<String, Object>();
   private Map<String, Object> transVertices = new HashMap<String, Object>();
-  //private ArrayList<Object> arcVertices = new ArrayList<Object>();
     
   public JGraphPanel(Petrinet pn) {
 	graph = new mxGraph();
@@ -63,7 +63,7 @@ public class JGraphPanel  extends JPanel {
     	transVertices.put(t.getName(), vertex);
     }
     
-    // For each place and transition draw the edges between them
+    // For each arc draw the edge to represent it
     for (Arc a : arcs) {
     	Object from = null;
     	Object to = null;
