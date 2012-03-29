@@ -271,7 +271,8 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				Petrinet impPN = new Petrinet("MyNet");
 				File newFile = fileBrowser.getSelectedFile();
-				Importer importer = new Importer(newFile.getPath(), impPN);
+				impPN.setFilepath(newFile.toString());
+				Importer importer = new Importer(impPN.getFilepath(), impPN);
 				petrinet.gui.PetrinetGUI.displayPetrinet(impPN);
 		    }
 			

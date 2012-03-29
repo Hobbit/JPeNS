@@ -51,10 +51,9 @@ public class Importer
 			{
 			    Document doc = db.parse(file);
 			    Element docEle = doc.getDocumentElement();
-
+			    
 				// Find the nodes containing the transitions
 			    NodeList transitionElements = docEle.getElementsByTagName("transition");
-
 			    // Print total transition elements in document
 				List<TransitionNode> transitions = GetTransitions(transitionElements);
 			    System.out.println("Total transitions: " + transitions.size());

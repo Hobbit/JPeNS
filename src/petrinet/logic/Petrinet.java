@@ -20,6 +20,7 @@ public class Petrinet extends PetrinetObject {
     // Default constructor
     public Petrinet(String name) {
         super(name);
+        
     }
 
     /** 
@@ -206,5 +207,11 @@ public class Petrinet extends PetrinetObject {
     
     public void setFilepath(String newPath){
     	this.filepath = newPath;
+
+    	String[] title = newPath.replace("\\","/").split("/");
+		title[title.length - 1] = title[title.length - 1].replace(".xml", "");
+		title[title.length - 1] = title[title.length - 1].replace("_", " ");
+		setName(title[title.length - 1]);
     }
+    
 }
