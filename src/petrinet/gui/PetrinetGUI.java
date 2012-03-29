@@ -1,6 +1,6 @@
 package petrinet.gui;
 
-import src.Importer;
+import master.Importer;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -270,7 +270,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			int returnVal = fileBrowser.showOpenDialog(PetrinetGUI.this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File newFile = fileBrowser.getSelectedFile();
-				Importer importer = new Importer(newFile, pn);
+				Importer importer = new Importer(newFile.getPath(), pn);
 		    }
 			
 		}else if(buttonString.equals("Quit")){
