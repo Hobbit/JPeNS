@@ -36,8 +36,6 @@ public class JGraphPanel  extends JPanel {
   final String PLACE_STYLE = "strokeColor=red;fillColor=green";
   final String TRANSITION_STYLE = "ROUNDED;strokeColor=green;fillColor=orange";
   
-  private ArrayList<Arc> arcs = new ArrayList<Arc>();
-  
   // A way to store places and transitions that are retrievable by name
   // There are 2 Maps since a transition and place may have the same name, perhaps.
   private Map<String, Object> placeVertices = new HashMap<String, Object>();
@@ -52,17 +50,11 @@ public class JGraphPanel  extends JPanel {
 //    Object v2 = graph.insertVertex(defaultParent, null, "World", 0, 0, 80, 30);
 //    graph.insertEdge(defaultParent, null, "Edge", v1, v2);
 
-    // These are just used for testing to see if i can create an edge by referencing
-    // previously created vertices.
-    //Object tempFrom = null;
-    //Object tempTo = null;
-    
     // For each place in the petrinet, add a vertex
     for (Place p : pn.getPlaces()) {
     	Object vertex = graph.insertVertex(defaultParent, null, p.getName(), 0, 0, 
     			PLACE_WIDTH, PLACE_HEIGHT, PLACE_STYLE);
     	placeVertices.put(p.getName(), vertex);
-    	//tempFrom = vertex;
     }
     
     // For each transition in the petrinet, add a vertex
@@ -70,13 +62,10 @@ public class JGraphPanel  extends JPanel {
     	Object vertex = graph.insertVertex(defaultParent, null, t.getName(), 0, 0, 
     			TRANSITION_WIDTH, TRANSITION_HEIGHT, TRANSITION_STYLE);
     	transVertices.put(t.getName(), vertex);
-    	//tempTo = vertex;
     }
-    
-    //graph.insertEdge(defaultParent, null, "Temp Edge", tempFrom, tempTo);
-    
+            
     // For each arc draw the edge to represent it
-    for (Arc a : arcs) {
+    for (Arc a : pn.getArcs()) {
     	// Create objects to represent the 'from' and 'to' nodes
     	Object from = null;
     	Object to = null;
@@ -98,8 +87,6 @@ public class JGraphPanel  extends JPanel {
     	}
     	
     	graph.insertEdge(defaultParent, null, "Edge", from, to);
-    	
-    	System.out.println("Tried to make an arc from " + from.toString() + " to " + to.toString());
     }
     
     // For each arc, find the place it is going to and from, then make edges.
