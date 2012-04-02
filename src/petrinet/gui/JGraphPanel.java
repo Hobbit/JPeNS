@@ -14,15 +14,12 @@ import petrinet.logic.Transition;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+@SuppressWarnings("serial")
 
 /**
- * First examples of JGraphX - Creating a simple frame that
- * contains a graph component with two vertices and an edge connecting them.
- * @author vainolo
+ * Creates an MXGraph which can then be used by a layout mechanism in the calling class
  */
 public class JGraphPanel  extends JPanel {
- 
-	private static final long serialVersionUID = 196831535599934813L;
  
 	public mxGraph graph;
 	public mxGraphComponent graphComponent;

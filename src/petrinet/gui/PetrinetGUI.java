@@ -35,7 +35,6 @@ import petrinet.logic.Transition;
 
 
 import com.mxgraph.layout.mxOrganicLayout;
-import com.mxgraph.view.mxGraph;
 
 @SuppressWarnings("serial")
 public class PetrinetGUI extends JFrame implements ActionListener{
