@@ -240,15 +240,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			}
 			lineNumber++;
 		}
-		contentPane.add("West", placesPanel);		
-		
+		contentPane.add("West", placesPanel);				
 		
 		/*
 		 * Add the Graph layout frame here
-		 */
-	    	    
+		 */    	    
 	    JGraphPanel graphPan = new JGraphPanel(pn);
-
 	    contentPane.add("Center", graphPan.graphComponent);
 	    
 	    mxOrganicLayout organic = new mxOrganicLayout(graphPan.graph);
