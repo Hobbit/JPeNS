@@ -42,6 +42,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	/**
 	 * Variables and Constants for the class
 	 */
+	static JFrame window = null;
 	private final static Color CAN_FIRE = Color.GREEN;
 	private final static Color NORMAL = Color.ORANGE;
 	private final static Color UNCONNECTED = Color.GRAY;
@@ -51,7 +52,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	private List<Place> pList = null;
 	private List<Arc> aList = null;
 	private TransitionButton[] buttons = null;
-	private PlaceLabel[] labels = null;
+	private PlaceLabel[] labels = null; 
 	private JGraphPanel graphPan = null;
 	private JFrame confirm = null;
 	private JButton confirmYes = null;
@@ -270,6 +271,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 				pn.clear();
 				pn.setFilepath(newFile.toString());
 				Importer importer = new Importer(pn.getFilepath(), pn);
+				window.dispose();
 				petrinet.gui.PetrinetGUI.displayPetrinet(pn);
 		    }
 			
@@ -326,7 +328,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	public static void displayPetrinet(final Petrinet pn){
 		Runnable guiCreator = new Runnable(){
 			public void run(){
-				JFrame window = new JFrame();
+				//JFrame window = new JFrame();
 				try {
 					window = new PetrinetGUI(pn);
 				} catch (IOException e) {
