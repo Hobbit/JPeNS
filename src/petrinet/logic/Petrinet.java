@@ -214,4 +214,11 @@ public class Petrinet extends PetrinetObject {
 		setName(title[title.length - 1]);
     }
     
+    public void clear(){
+    	arcs.clear();
+    	inhibitors.clear();
+    	places.clear();
+    	transitions.clear();
+    }
+    
 }
