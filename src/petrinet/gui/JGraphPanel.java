@@ -26,9 +26,10 @@ public class JGraphPanel extends JPanel {
 	final int PLACE_HEIGHT = 30;
 	final int TRANSITION_WIDTH = 80;
 	final int TRANSITION_HEIGHT = 30;
-	final String PLACE_STYLE = "strokeColor=red;fillColor=green";
+	final String PLACE_STYLE = "strokeColor=black;fillColor=gray";
 	final String TRANSITION_STYLE = "ROUNDED;strokeColor=green;fillColor=orange";
-
+	final String CAN_FIRE_STYLE = "ROUNDED;strokeColor=green;fillColor=green";
+	
 	public mxGraph graph;
 	public mxGraphComponent graphComponent;
 	public Petrinet pn = null;
@@ -52,6 +53,11 @@ public class JGraphPanel extends JPanel {
 	 * Draws the graph from the petrinet
 	 */
 	public void DrawGraph() {
+		// Clear out our existing graph data so that we can reconstruct the graph
+		placeVertices.clear();
+		transVertices.clear();
+		graph.removeCells(graph.getChildCells(defaultParent, true, true));
+		
 	    graph.getModel().beginUpdate();
 		
 	    // For each place in the petrinet, add a vertex
@@ -63,8 +69,9 @@ public class JGraphPanel extends JPanel {
 	    
 	    // For each transition in the petrinet, add a vertex
 	    for (Transition t : pn.getTransitions()) {
+	    	String style = t.canFire() ? CAN_FIRE_STYLE : TRANSITION_STYLE;
 	    	Object vertex = graph.insertVertex(defaultParent, null, t.getName(), 0, 0, 
-	    			TRANSITION_WIDTH, TRANSITION_HEIGHT, TRANSITION_STYLE);
+	    			TRANSITION_WIDTH, TRANSITION_HEIGHT, style);
 	    	transVertices.put(t.getName(), vertex);
 	    }
 	            

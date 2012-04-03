@@ -124,10 +124,8 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			labels[i].repaint();
 		}
 		
-		Container contentPane = getContentPane();
-
-		graphPan = new JGraphPanel(pn);
-	    contentPane.add("Center", graphPan.graphComponent);
+		// Refresh the graph
+		graphPan.DrawGraph();
 	}
 	
 	/**
@@ -252,9 +250,6 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		 */    	    
 	    graphPan = new JGraphPanel(pn);
 	    contentPane.add("Center", graphPan.graphComponent);
-	    
-	    mxOrganicLayout organic = new mxOrganicLayout(graphPan.graph);
-	    organic.execute(graphPan.graph.getDefaultParent());
 	}
 	
 	/**
