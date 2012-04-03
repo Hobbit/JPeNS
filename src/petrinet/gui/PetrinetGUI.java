@@ -52,6 +52,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	private List<Arc> aList = null;
 	private TransitionButton[] buttons = null;
 	private PlaceLabel[] labels = null;
+	private JGraphPanel graphPan = null;
 	private JFrame confirm = null;
 	private JButton confirmYes = null;
  	private JButton confirmNo = null;
@@ -122,6 +123,11 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		for(int i = 0; i < labels.length; i++){
 			labels[i].repaint();
 		}
+		
+		Container contentPane = getContentPane();
+
+		graphPan = new JGraphPanel(pn);
+	    contentPane.add("Center", graphPan.graphComponent);
 	}
 	
 	/**
@@ -244,7 +250,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		/*
 		 * Add the Graph layout frame here
 		 */    	    
-	    JGraphPanel graphPan = new JGraphPanel(pn);
+	    graphPan = new JGraphPanel(pn);
 	    contentPane.add("Center", graphPan.graphComponent);
 	    
 	    mxOrganicLayout organic = new mxOrganicLayout(graphPan.graph);

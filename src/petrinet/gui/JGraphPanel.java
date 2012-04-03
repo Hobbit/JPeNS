@@ -12,6 +12,7 @@ import petrinet.logic.Petrinet;
 import petrinet.logic.Place;
 import petrinet.logic.Transition;
 
+import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 @SuppressWarnings("serial")
@@ -19,29 +20,40 @@ import com.mxgraph.view.mxGraph;
 /**
  * Creates an MXGraph which can then be used by a layout mechanism in the calling class
  */
-public class JGraphPanel  extends JPanel {
+public class JGraphPanel extends JPanel {
  
-	public mxGraph graph;
-	public mxGraphComponent graphComponent;
-  
 	final int PLACE_WIDTH = 80;
 	final int PLACE_HEIGHT = 30;
 	final int TRANSITION_WIDTH = 80;
 	final int TRANSITION_HEIGHT = 30;
 	final String PLACE_STYLE = "strokeColor=red;fillColor=green";
 	final String TRANSITION_STYLE = "ROUNDED;strokeColor=green;fillColor=orange";
-  
+
+	public mxGraph graph;
+	public mxGraphComponent graphComponent;
+	public Petrinet pn = null;
+	  
 	// A way to store places and transitions that are retrievable by name
 	// There are 2 Maps since a transition and place may have the same name, perhaps.
 	private Map<String, Object> placeVertices = new HashMap<String, Object>();
 	private Map<String, Object> transVertices = new HashMap<String, Object>();
     
+	private Object defaultParent = null;
+	
 	public JGraphPanel(Petrinet pn) {
 		graph = new mxGraph();
+		this.pn = pn;
+	    defaultParent = graph.getDefaultParent();
+	    
+	    DrawGraph();
+	}
 	
-	    Object defaultParent = graph.getDefaultParent();
+	/**
+	 * Draws the graph from the petrinet
+	 */
+	public void DrawGraph() {
 	    graph.getModel().beginUpdate();
-	
+		
 	    // For each place in the petrinet, add a vertex
 	    for (Place p : pn.getPlaces()) {
 	    	Object vertex = graph.insertVertex(defaultParent, null, p.getName(), 0, 0, 
@@ -85,5 +97,8 @@ public class JGraphPanel  extends JPanel {
 	    
 	    graph.getModel().endUpdate();
 	    graphComponent = new mxGraphComponent(graph);
+	    
+	    mxOrganicLayout organic = new mxOrganicLayout(graph);
+	    organic.execute(defaultParent);
 	}
 }
