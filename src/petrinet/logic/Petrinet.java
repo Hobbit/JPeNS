@@ -17,7 +17,7 @@ public class Petrinet {
     List<Transition> transitions    = new ArrayList<Transition>();
     List<Arc> arcs                  = new ArrayList<Arc>();
     String filepath;
-    mxGraph graph = null;
+    public final mxGraph graph;
     private String name;
     
     // Default constructor

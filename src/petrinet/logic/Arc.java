@@ -67,12 +67,20 @@ extends PetrinetObject {
         if (d == Direction.PLACE_TO_TRANSITION) {
             this.fromType = EndType.PLACE;
             this.toType = EndType.TRANSITION;
+            
+            // Add an edge to the graph
+    	    graph.getModel().beginUpdate();            
             this.mxcell = (mxCell)graph.insertEdge(graph.getDefaultParent(), null, name, p.mxcell, t.mxcell);
+            graph.getModel().endUpdate();
         }
         else {
             this.fromType = EndType.TRANSITION;
             this.toType = EndType.PLACE;
+            
+            // Add an edge to the graph
+    	    graph.getModel().beginUpdate();            
             this.mxcell = (mxCell)graph.insertEdge(graph.getDefaultParent(), null, name, t.mxcell, p.mxcell);
+            graph.getModel().endUpdate();
         }
     }
 

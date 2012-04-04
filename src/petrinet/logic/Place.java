@@ -15,7 +15,12 @@ extends PetrinetObject {
 
     protected Place(String name, mxGraph graph) {
         super(name);
-        this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0, PLACE_WIDTH, PLACE_HEIGHT, PLACE_STYLE);
+        
+        // Add a vertex to the graph
+	    graph.getModel().beginUpdate();            
+        this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0, 
+        		PLACE_WIDTH, PLACE_HEIGHT, PLACE_STYLE);
+        graph.getModel().endUpdate();
     }
 
     protected Place(String name, int initial, mxGraph graph) {

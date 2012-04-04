@@ -26,15 +26,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.filechooser.*;
 
 import petrinet.logic.Arc;
 import petrinet.logic.Petrinet;
 import petrinet.logic.Place;
 import petrinet.logic.Transition;
-
-
-import com.mxgraph.layout.mxOrganicLayout;
 
 @SuppressWarnings("serial")
 public class PetrinetGUI extends JFrame implements ActionListener{
@@ -50,7 +46,6 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	private Petrinet pn;
 	private List<Transition> tList = null;
 	private List<Place> pList = null;
-	private List<Arc> aList = null;
 	private TransitionButton[] buttons = null;
 	private PlaceLabel[] labels = null; 
 	private JGraphPanel graphPan = null;
@@ -76,8 +71,10 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			this.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(transition.canFire()){
+					    pn.graph.getModel().beginUpdate();
 						transition.fire();
 						fireStateChanged();
+						pn.graph.getModel().endUpdate();
 						refreshScreen();
 					}			
 				} 
@@ -126,7 +123,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		}
 		
 		// Refresh the graph
-		graphPan.DrawGraph();
+		graphPan.RefreshGraph();
 	}
 	
 	/**
@@ -141,7 +138,6 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		//Loads lists with the petrinet's transitions and places
 		tList = pn.getTransitions();
 		pList = pn.getPlaces();
-		aList = pn.getArcs();
 		
 		//Main container and panels
 		Container contentPane = getContentPane();
@@ -249,7 +245,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		/*
 		 * Add the Graph layout frame here
 		 */    	    
-	    graphPan = new JGraphPanel(pn);
+	    graphPan = new JGraphPanel(pn.graph);
 	    contentPane.add("Center", graphPan.graphComponent);
 	}
 	
