@@ -13,6 +13,7 @@ import petrinet.logic.Place;
 import petrinet.logic.Transition;
 
 import com.mxgraph.layout.mxOrganicLayout;
+import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 @SuppressWarnings("serial")
@@ -36,8 +37,8 @@ public class JGraphPanel extends JPanel {
 	  
 	// A way to store places and transitions that are retrievable by name
 	// There are 2 Maps since a transition and place may have the same name, perhaps.
-	private Map<String, Object> placeVertices = new HashMap<String, Object>();
-	private Map<String, Object> transVertices = new HashMap<String, Object>();
+	private Map<String, mxCell> placeVertices = new HashMap<String, mxCell>();
+	private Map<String, mxCell> transVertices = new HashMap<String, mxCell>();
     
 	private Object defaultParent = null;
 	
@@ -62,7 +63,7 @@ public class JGraphPanel extends JPanel {
 		
 	    // For each place in the petrinet, add a vertex
 	    for (Place p : pn.getPlaces()) {
-	    	Object vertex = graph.insertVertex(defaultParent, null, p.getName(), 0, 0, 
+	    	mxCell vertex = (mxCell)graph.insertVertex(defaultParent, null, p.getName(), 0, 0, 
 	    			PLACE_WIDTH, PLACE_HEIGHT, PLACE_STYLE);
 	    	placeVertices.put(p.getName(), vertex);
 	    }
@@ -70,7 +71,7 @@ public class JGraphPanel extends JPanel {
 	    // For each transition in the petrinet, add a vertex
 	    for (Transition t : pn.getTransitions()) {
 	    	String style = t.canFire() ? CAN_FIRE_STYLE : TRANSITION_STYLE;
-	    	Object vertex = graph.insertVertex(defaultParent, null, t.getName(), 0, 0, 
+	    	mxCell vertex = (mxCell)graph.insertVertex(defaultParent, null, t.getName(), 0, 0, 
 	    			TRANSITION_WIDTH, TRANSITION_HEIGHT, style);
 	    	transVertices.put(t.getName(), vertex);
 	    }
