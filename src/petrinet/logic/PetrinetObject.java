@@ -42,4 +42,6 @@ public class PetrinetObject {
     public String toString() {
         return /*getClass().getSimpleName() + " " + */ name;
     }
+    
+    
 }
