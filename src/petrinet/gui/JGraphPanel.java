@@ -1,19 +1,8 @@
 package petrinet.gui;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JPanel;
 
-import petrinet.logic.ArcEndType.EndType;
-
-import petrinet.logic.Arc;
-import petrinet.logic.Petrinet;
-import petrinet.logic.Place;
-import petrinet.logic.Transition;
-
 import com.mxgraph.layout.mxOrganicLayout;
-import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 @SuppressWarnings("serial")

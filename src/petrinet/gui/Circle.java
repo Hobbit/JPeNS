@@ -1,16 +1,10 @@
 package petrinet.gui;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.io.*;
-import javax.swing.*;
-import java.util.Random;
 
 public class Circle{
    private int centerX, centerY, radius;
    private Color color;
-   private int direction, velocity;
    private boolean filled;
 
    public Circle(int x, int y, int r, Color c){

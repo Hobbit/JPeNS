@@ -1,8 +1,5 @@
 package petrinet.logic;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 

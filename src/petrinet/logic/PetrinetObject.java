@@ -1,7 +1,6 @@
 package petrinet.logic;
 
 import com.mxgraph.model.mxCell;
-import com.mxgraph.view.mxGraph;
 
 public class PetrinetObject {
 	
