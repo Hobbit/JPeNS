@@ -1,5 +1,11 @@
 package petrinet.logic;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.mxgraph.model.mxCell;
+import com.mxgraph.view.mxGraph;
+
 import petrinet.logic.ArcEndType.EndType;
 
 /**
@@ -11,9 +17,9 @@ extends PetrinetObject {
 
     Place place;
     Transition transition;
+    public final EndType fromType;
+    public final EndType toType;
     Direction direction;
-    public EndType from;
-    public EndType to;
     int weight = 1;
     
     enum Direction {
@@ -53,37 +59,31 @@ extends PetrinetObject {
         public abstract void fire(Place p, int weight);
     }
     
-    private Arc(String name, Direction d, Place p, Transition t) {
+    private Arc(String name, Direction d, Place p, Transition t, mxGraph graph) {
         super(name);
         this.direction = d;
         this.place = p;
         this.transition = t;
         if (d == Direction.PLACE_TO_TRANSITION) {
-            this.from = EndType.PLACE;
-            this.to = EndType.TRANSITION;
-        }
-        else if (d == Direction.TRANSITION_TO_PLACE) {
-            this.from = EndType.TRANSITION;
-            this.to = EndType.PLACE;
+            this.fromType = EndType.PLACE;
+            this.toType = EndType.TRANSITION;
+            this.mxcell = (mxCell)graph.insertEdge(graph.getDefaultParent(), null, name, p.mxcell, t.mxcell);
         }
         else {
-        	System.out.println("The Direction " + d.toString() + " is invalid for an Arc.");
-        	System.exit(1);
+            this.fromType = EndType.TRANSITION;
+            this.toType = EndType.PLACE;
+            this.mxcell = (mxCell)graph.insertEdge(graph.getDefaultParent(), null, name, t.mxcell, p.mxcell);
         }
     }
 
-    protected Arc(String name, Place p, Transition t) {
-        this(name, Direction.PLACE_TO_TRANSITION, p, t);
+    protected Arc(String name, Place p, Transition t, mxGraph graph) {
+        this(name, Direction.PLACE_TO_TRANSITION, p, t, graph);
         t.addIncoming(this);
-        this.from = EndType.PLACE;
-        this.to = EndType.TRANSITION;
     }
 
-    protected Arc(String name, Transition t, Place p) {
-        this(name, Direction.TRANSITION_TO_PLACE, p, t);
+    protected Arc(String name, Transition t, Place p, mxGraph graph) {
+        this(name, Direction.TRANSITION_TO_PLACE, p, t, graph);
         t.addOutgoing(this);
-        this.from = EndType.TRANSITION;
-        this.to = EndType.PLACE;
     }
 
     public boolean canFire() {

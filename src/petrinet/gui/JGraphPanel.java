@@ -83,18 +83,18 @@ public class JGraphPanel extends JPanel {
 	    	Object to = null;
 	    	
 	    	// Retrieve the appropriate vertex for the from-node of the arc
-	    	if (a.from == EndType.PLACE) {
+	    	if (a.fromType == EndType.PLACE) {
 	    		from = placeVertices.get(a.getPlace().getName());
 	    	}
-	    	else if (a.from == EndType.TRANSITION) {
+	    	else if (a.fromType == EndType.TRANSITION) {
 	    		from = transVertices.get(a.getTransition().getName());
 	    	}
 	    		
 	    	// Retrieve the appropriate vertex for the to-node of the arc
-	    	if (a.to == EndType.PLACE) {
+	    	if (a.toType == EndType.PLACE) {
 	    		to = placeVertices.get(a.getPlace().getName());
 	    	}
-	    	else if (a.to == EndType.TRANSITION) {
+	    	else if (a.toType == EndType.TRANSITION) {
 	    		to = transVertices.get(a.getTransition().getName());
 	    	}
 	    	

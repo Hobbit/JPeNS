@@ -3,23 +3,28 @@ package petrinet.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mxgraph.view.mxGraph;
+
 /**
  * This contains all of the properties of a petrinet and creates
  * the framework to allow objects to be added.
  */
 
 
-public class Petrinet extends PetrinetObject {
+public class Petrinet {
 
     List<Place> places              = new ArrayList<Place>();
     List<Transition> transitions    = new ArrayList<Transition>();
     List<Arc> arcs                  = new ArrayList<Arc>();
     String filepath;
+    mxGraph graph = null;
+    private String name;
     
     // Default constructor
     public Petrinet(String name) {
-        super(name);
-        
+        super();
+        this.graph = new mxGraph();
+        this.name = name;
     }
 
     /** 
@@ -53,7 +58,7 @@ public class Petrinet extends PetrinetObject {
      * @return The new transition that was created and added to the petrinet
      */
     public Transition addTransition(String name) {
-        Transition t = new Transition(name);
+        Transition t = new Transition(name, graph);
         transitions.add(t);
         return t;
     }
@@ -72,7 +77,7 @@ public class Petrinet extends PetrinetObject {
      * @return The new place that was added to the petrinet
      */
     public Place addPlace(String name, int tokens) {
-        Place p = new Place(name, tokens);
+        Place p = new Place(name, tokens, graph);
         places.add(p);
         return p;
     }
@@ -84,7 +89,7 @@ public class Petrinet extends PetrinetObject {
      * @return A new arc that was added to the petrinet
      */
     public Arc addArc(String name, Place place, Transition tran) {
-        Arc arc = new Arc(name, place, tran);
+        Arc arc = new Arc(name, place, tran, graph);
         arcs.add(arc);
         return arc;
     }
@@ -96,7 +101,7 @@ public class Petrinet extends PetrinetObject {
      * @return A new arc that was added to the petrinet
      */
     public Arc addArc(String name, Transition tran, Place place) {
-        Arc arc = new Arc(name, tran, place);
+        Arc arc = new Arc(name, tran, place, graph);
         arcs.add(arc);
         return arc;
     }
@@ -189,4 +194,11 @@ public class Petrinet extends PetrinetObject {
     	transitions.clear();
     }
     
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

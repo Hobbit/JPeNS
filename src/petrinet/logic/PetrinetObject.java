@@ -1,12 +1,34 @@
 package petrinet.logic;
 
-public class PetrinetObject {
+import com.mxgraph.model.mxCell;
+import com.mxgraph.view.mxGraph;
 
+public class PetrinetObject {
+	
+	final int PLACE_WIDTH = 80;
+	final int PLACE_HEIGHT = 30;
+	final int TRANSITION_WIDTH = 80;
+	final int TRANSITION_HEIGHT = 30;
+	final String PLACE_STYLE = "strokeColor=black;fillColor=gray";
+	final String TRANSITION_STYLE = "ROUNDED;strokeColor=green;fillColor=orange";
+	final String CAN_FIRE_STYLE = "ROUNDED;strokeColor=green;fillColor=green";
+
+	protected mxCell mxcell; 
+	
     private String name;
     
     public PetrinetObject(String name) {
-        super();
+        super();      	
         this.name = name;
+        mxcell = new mxCell();
+    }
+    
+    public mxCell getMxCell() {
+    	return mxcell;
+    }
+    
+    public void setMxCell(mxCell newCell) {
+    	this.mxcell = newCell;
     }
     
     public String getName() {

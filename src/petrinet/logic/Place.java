@@ -1,5 +1,8 @@
 package petrinet.logic;
 
+import com.mxgraph.view.mxGraph;
+import com.mxgraph.model.mxCell;
+
 public class Place 
 extends PetrinetObject {
 
@@ -10,17 +13,18 @@ extends PetrinetObject {
     private int maxTokens = UNLIMITED;
     
 
-    protected Place(String name) {
+    protected Place(String name, mxGraph graph) {
         super(name);
+        this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0, PLACE_WIDTH, PLACE_HEIGHT, PLACE_STYLE);
     }
 
-    protected Place(String name, int initial) {
-        this(name);
+    protected Place(String name, int initial, mxGraph graph) {
+        this(name, graph);
         this.tokens = initial;
     }
 
     /**
-     * Checks if it the place has atleast a certain number of tokens
+     * Checks if it the place has at least a certain number of tokens
      * 
      * @param threshold
      * @return

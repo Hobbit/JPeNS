@@ -3,18 +3,21 @@ package petrinet.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mxgraph.model.mxCell;
+import com.mxgraph.view.mxGraph;
+
 public class Transition
 extends PetrinetObject{
 
-    public Transition(String name) {
+    public Transition(String name, mxGraph graph) {
         super(name);
-
-    }
+    	String style = this.canFire() ? CAN_FIRE_STYLE : TRANSITION_STYLE;
+        this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0,
+    			TRANSITION_WIDTH, TRANSITION_HEIGHT, style);
+    }    
 
     private List<Arc> incoming = new ArrayList<Arc>();
     private List<Arc> outgoing = new ArrayList<Arc>();
-
-	
     
     /**
      * Checks if the transition is able to fire

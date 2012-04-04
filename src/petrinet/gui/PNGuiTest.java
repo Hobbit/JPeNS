@@ -8,7 +8,7 @@ import petrinet.logic.Transition;
 public class PNGuiTest {
 
     public static void main(String[] args) {
-        Petrinet pn = new Petrinet();
+        Petrinet pn = new Petrinet("My net");
         Transition t1 = pn.addTransition("t1");
         Place p1 = pn.addPlace("p1", 2);
         Place p2 = pn.addPlace("p2");

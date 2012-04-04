@@ -5,7 +5,7 @@ import petrinet.logic.Petrinet;
 public class MainApp
 {
     public static void main(String[] args) {
-        Petrinet pn = new Petrinet("MyNet");
+        Petrinet pn = new Petrinet("My Net");
 
 		//data.xml is the default petrinet file to load on start
         pn.setFilepath("src/default.xml");
