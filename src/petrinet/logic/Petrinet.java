@@ -14,7 +14,6 @@ public class Petrinet extends PetrinetObject {
     List<Place> places              = new ArrayList<Place>();
     List<Transition> transitions    = new ArrayList<Transition>();
     List<Arc> arcs                  = new ArrayList<Arc>();
-    List<InhibitorArc> inhibitors   = new ArrayList<InhibitorArc>();
     String filepath;
     
     // Default constructor
@@ -27,9 +26,7 @@ public class Petrinet extends PetrinetObject {
      * @param item A PetrinetObject to be added to the petrinet
      */
     public void add(PetrinetObject item) {
-        if (item instanceof InhibitorArc) {
-            inhibitors.add((InhibitorArc) item);
-        } else if (item instanceof Arc) {
+        if (item instanceof Arc) {
             arcs.add((Arc) item);
         } else if (item instanceof Place) {
             places.add((Place) item);
@@ -103,19 +100,7 @@ public class Petrinet extends PetrinetObject {
         arcs.add(arc);
         return arc;
     }
-    
-    /**
-     * @param name The name of the new inhibitor arc
-     * @param place A place that the inhibitor arc will originate at
-     * @param tran A transition that the inhibitor arc will end at
-     * @return A new inhibitor arc that was added to the petrinet
-     */
-    public InhibitorArc addInhibitorArc(String name, Place place, Transition tran) {
-        InhibitorArc inhibitor = new InhibitorArc(name, place, tran);
-        inhibitors.add(inhibitor);
-        return inhibitor;
-    }
-    
+        
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Petrinet ");
@@ -184,22 +169,6 @@ public class Petrinet extends PetrinetObject {
         return arcs;
     }
 
-    /**
-     * Searches through the inhibitor arcs in the petrinet to find one by name
-     * @param name The name of a inhibitor arc to search for
-     * @return If an inhibitor arc is found it is returned, otherwise null
-     */
-    public InhibitorArc getGuard(String name) {
-    	for (InhibitorArc g : inhibitors) {
-    		if (g.getName().equals(name)) {
-    			return g;
-    		}
-    	}
-    	return null;
-    }
-    public List<InhibitorArc> getInhibitorArcs() {
-        return inhibitors;
-    }
     
     public String getFilepath(){
     	return this.filepath;
@@ -216,7 +185,6 @@ public class Petrinet extends PetrinetObject {
     
     public void clear(){
     	arcs.clear();
-    	inhibitors.clear();
     	places.clear();
     	transitions.clear();
     }

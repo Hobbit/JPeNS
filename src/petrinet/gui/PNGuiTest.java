@@ -1,7 +1,6 @@
 package petrinet.gui;
 
 import petrinet.logic.Arc;
-import petrinet.logic.InhibitorArc;
 import petrinet.logic.Petrinet;
 import petrinet.logic.Place;
 import petrinet.logic.Transition;
@@ -9,7 +8,7 @@ import petrinet.logic.Transition;
 public class PNGuiTest {
 
     public static void main(String[] args) {
-        Petrinet pn = new Petrinet("mein Netz");
+        Petrinet pn = new Petrinet();
         Transition t1 = pn.addTransition("t1");
         Place p1 = pn.addPlace("p1", 2);
         Place p2 = pn.addPlace("p2");
@@ -22,8 +21,6 @@ public class PNGuiTest {
         Arc a3 = pn.addArc("a3", p2, t2);
         Arc a4 = pn.addArc("a4", t2, p3);
         
-        InhibitorArc inhibitor = pn.addInhibitorArc("inhibitor", p3, t1);
-
         PetrinetGUI.displayPetrinet(pn);
     }
     
