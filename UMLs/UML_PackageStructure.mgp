@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PackageAnalysis>
+    <Package name="master" x="149" y="98">
+        <DependencyLink destination="petrinet.logic"/>
+    </Package>
+    <Package name="petrinet.gui" x="344" y="99">
+        <DependencyLink destination="petrinet.logic"/>
+        <DependencyLink destination="master"/>
+    </Package>
+    <Package name="petrinet.logic" x="217" y="185"/>
+</PackageAnalysis>
