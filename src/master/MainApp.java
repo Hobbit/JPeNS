@@ -10,6 +10,7 @@ public class MainApp
 		//data.xml is the default petrinet file to load on start
         pn.setFilepath("src/default.xml");
 		// At this point our importer should be modifying the existing pn Petrinet object
+		@SuppressWarnings("unused")
 		Importer importer = new Importer(pn.getFilepath(), pn);
 		
 
