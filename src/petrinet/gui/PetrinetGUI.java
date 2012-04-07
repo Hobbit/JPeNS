@@ -42,7 +42,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	private final static Color NORMAL = Color.ORANGE;
 	private final static Color UNCONNECTED = Color.GRAY;
 	private final static Color BORDERS = Color.BLACK;
-	private Petrinet pn;
+	public Petrinet pn;
 	private List<Transition> tList = null;
 	private List<Place> pList = null;
 	private TransitionButton[] buttons = null;
@@ -52,56 +52,6 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	private JButton confirmYes = null;
  	private JButton confirmNo = null;
  	private JLabel confirmLabel = null;
-	
-	/**
-	 * Extends JButton to manage transitions when the user clicks to fire a transition
-	 */
-
-	public class TransitionButton extends JButton{
-		private Transition transition;
-		/**
-		 * Default constructor for Transition Buttons
-		 * @param transition
-		 */
-		public TransitionButton(final Transition transition){
-			super(transition.getName());
-			this.transition = transition;	
-			
-			this.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if(transition.canFire()){
-					    pn.graph.getModel().beginUpdate();
-						transition.fire();
-						fireStateChanged();
-						pn.graph.getModel().endUpdate();
-						refreshScreen();
-					}			
-				} 
-			});
-		}
-		
-		/**
-		 * This methods returns whether or not the button is enabled for firing
-		 * @return boolean
-		 */
-		public boolean isEnabled(){
-			if(transition == null){
-				return false;
-			}
-			return transition.canFire();
-		}
-		
-		/**
-		 * This method gets the title of the transition to be put on the buttons
-		 * @return String
-		 */
-		public String getText(){
-			if(transition == null){
-				return null;
-			}
-			return transition.toString();
-		}
-	}
 
 	/**
 	 * This method repaint the items on the screen after each firing
@@ -204,7 +154,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		//Steps through each transition and creates a new button and initializes
 		//it to the appropriate status color.
 		for(int i = 0; i < tList.size(); i++){
-			buttons[i] = new TransitionButton(tList.get(i));
+			buttons[i] = new TransitionButton(tList.get(i), this);
 			transitionsPanel.add(buttons[i]);
 			
 			if(tList.get(i).canFire()){
@@ -337,7 +287,5 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			}
 		};
 		SwingUtilities.invokeLater(guiCreator);
-	}
-	
-	
+	}	
 }
