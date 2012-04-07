@@ -11,8 +11,7 @@ public class MainApp
         pn.setFilepath("src/default.xml");
 		// At this point our importer should be modifying the existing pn Petrinet object
 		
-		Importer importer = new Importer(pn.getFilepath(), pn);
-		
+		Importer.Import(pn.getFilepath(), pn);	
 
         System.out.println("\nTransitions: " + pn.getTransitions().toString());
         System.out.println("Places: " + pn.getPlaces().toString());

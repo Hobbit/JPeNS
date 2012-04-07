@@ -6,8 +6,7 @@ import java.util.List;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 
-public class Transition
-extends PetrinetObject{
+public class Transition extends PetrinetObject{
 
     public Transition(String name, mxGraph graph) {
         super(name);

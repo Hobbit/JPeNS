@@ -54,28 +54,6 @@ public class PetrinetGUI extends JFrame implements ActionListener{
  	private JLabel confirmLabel = null;
 
 	/**
-	 * This method repaint the items on the screen after each firing
-	 */
-	public void refreshScreen(){
-		for(int i = 0; i < buttons.length; i++){
-			if(tList.get(i).canFire()){
-				buttons[i].setBackground(CAN_FIRE);
-			}else if(tList.get(i).isNotConnected()){
-				buttons[i].setBackground(UNCONNECTED);
-			}else{
-				buttons[i].setBackground(NORMAL);
-			}
-			buttons[i].repaint();
-		}
-		for(int i = 0; i < labels.length; i++){
-			labels[i].repaint();
-		}
-		
-		// Refresh the graph
-		graphPan.RefreshGraph();
-	}
-	
-	/**
 	 * Default constructor for the petrinet gui
 	 * @param pn
 	 * @throws IOException 
@@ -215,7 +193,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 				File newFile = fileBrowser.getSelectedFile();
 				pn.clear();
 				pn.setFilepath(newFile.toString());
-				Importer importer = new Importer(pn.getFilepath(), pn);
+				Importer.Import(pn.getFilepath(), pn);
 				window.dispose();
 				petrinet.gui.PetrinetGUI.displayPetrinet(pn);
 		    }
@@ -287,5 +265,27 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			}
 		};
 		SwingUtilities.invokeLater(guiCreator);
+	}	
+	
+	/**
+	 * This method repaints the items on the screen after each firing
+	 */
+	public void refreshScreen(){
+		for(int i = 0; i < buttons.length; i++){
+			if(tList.get(i).canFire()){
+				buttons[i].setBackground(CAN_FIRE);
+			}else if(tList.get(i).isNotConnected()){
+				buttons[i].setBackground(UNCONNECTED);
+			}else{
+				buttons[i].setBackground(NORMAL);
+			}
+			buttons[i].repaint();
+		}
+		for(int i = 0; i < labels.length; i++){
+			labels[i].repaint();
+		}
+		
+		// Refresh the graph
+		graphPan.RefreshGraph();
 	}	
 }

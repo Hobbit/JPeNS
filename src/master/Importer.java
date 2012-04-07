@@ -16,9 +16,9 @@ import petrinet.logic.Arc;
 
 public class Importer
 {
-	private final boolean PRINT_DIAG_INFO = false;
+	private static final boolean PRINT_DIAG_INFO = false;
 
-	public Importer(String filepath, Petrinet pn)
+	public static void Import(String filepath, Petrinet pn)
 	{
 		try
 		{
@@ -40,8 +40,8 @@ public class Importer
 			System.out.println("There was an error finding the file");
 		}
 	}
-
-	private void ParseFile(File file, Petrinet pn)
+	
+	private static void ParseFile(File file, Petrinet pn)
 	{
 		try 
 		{

@@ -10,6 +10,7 @@ import petrinet.logic.Transition;
 /**
  * Extends JButton to manage transitions when the user clicks to fire a transition
  */
+@SuppressWarnings("serial")
 public class TransitionButton extends JButton{
 	private Transition transition;
 	private PetrinetGUI pnGui;
