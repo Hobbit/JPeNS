@@ -9,6 +9,7 @@ public class PetrinetObject {
 	final int TRANSITION_WIDTH = 80;
 	final int TRANSITION_HEIGHT = 30;
 	final String PLACE_STYLE = "strokeColor=black;fillColor=gray";
+	final String HAS_TOKENS_STYLE = "strokeColor=white;fillColor=blue";
 	final String TRANSITION_STYLE = "ROUNDED;strokeColor=green;fillColor=orange";
 	final String CAN_FIRE_STYLE = "ROUNDED;strokeColor=green;fillColor=green";
 

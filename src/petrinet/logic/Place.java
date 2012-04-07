@@ -15,11 +15,12 @@ extends PetrinetObject {
 
     protected Place(String name, mxGraph graph) {
         super(name);
+        String style = this.hasAtLeastTokens(1) ? HAS_TOKENS_STYLE : PLACE_STYLE;
         
         // Add a vertex to the graph
 	    graph.getModel().beginUpdate();            
         this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0, 
-        		PLACE_WIDTH, PLACE_HEIGHT, PLACE_STYLE);
+        		PLACE_WIDTH, PLACE_HEIGHT, style);
         graph.getModel().endUpdate();
     }
 
@@ -32,7 +33,7 @@ extends PetrinetObject {
      * Checks if it the place has at least a certain number of tokens
      * 
      * @param threshold
-     * @return
+     * @return boolean
      */
     public boolean hasAtLeastTokens(int threshold) {
         return (tokens >= threshold);
@@ -71,10 +72,22 @@ extends PetrinetObject {
 
     public void addTokens(int weight) {
         this.tokens += weight;
+        if(this.hasAtLeastTokens(1)){
+        	mxcell.setStyle(HAS_TOKENS_STYLE);
+        }
+        else{
+        	mxcell.setStyle(PLACE_STYLE);
+        }
     }
 
     public void removeTokens(int weight) {
         this.tokens -= weight;
+        if(this.hasAtLeastTokens(1)){
+        	mxcell.setStyle(HAS_TOKENS_STYLE);
+        }
+        else{
+        	mxcell.setStyle(PLACE_STYLE);
+        }
     }
     
     @Override
