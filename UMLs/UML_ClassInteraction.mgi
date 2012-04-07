@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <CommunicationClass name="petrinet.logic.Arc.Direction" x="4" y="135"/>
-    <CommunicationClass name="petrinet.logic.PetrinetObject" x="364" y="406"/>
-    <CommunicationClass name="petrinet.logic.Place" x="14" y="451">
+    <CommunicationClass name="petrinet.logic.Arc.Direction" x="384" y="492"/>
+    <CommunicationClass name="petrinet.logic.PetrinetObject" x="24" y="223"/>
+    <CommunicationClass name="petrinet.logic.Place" x="705" y="560">
         <Extension destinationClassName="petrinet.logic.PetrinetObject"/>
     </CommunicationClass>
-    <CommunicationClass name="master.TransitionNode" x="670" y="6"/>
-    <CommunicationClass name="petrinet.gui.PetrinetGUI.TransitionButton"
-        x="119" y="406">
-        <Association destinationClassName="petrinet.logic.Transition"
-            endpointName="transition" kind="Simple"/>
-        <Communication destinationClassName="petrinet.logic.PetrinetObject"/>
-        <Communication destinationClassName="petrinet.logic.Transition"/>
-    </CommunicationClass>
-    <CommunicationClass name="petrinet.logic.Transition" x="254" y="289">
+    <CommunicationClass name="petrinet.logic.Transition" x="282" y="451">
         <Extension destinationClassName="petrinet.logic.PetrinetObject"/>
         <Association destinationClassName="petrinet.logic.Arc"
             endpointName="incoming" kind="Simple"/>
@@ -21,48 +13,48 @@
             endpointName="outgoing" kind="Simple"/>
         <Communication destinationClassName="petrinet.logic.Arc"/>
     </CommunicationClass>
-    <CommunicationClass name="petrinet.gui.JGraphPanel" x="552" y="452"/>
-    <CommunicationClass name="petrinet.gui.PNGuiTest" x="131" y="137">
+    <CommunicationClass name="petrinet.gui.TransitionButton" x="84" y="350">
+        <Association destinationClassName="petrinet.logic.Transition"
+            endpointName="transition" kind="Simple"/>
+        <Association destinationClassName="petrinet.gui.PetrinetGUI"
+            endpointName="pnGui" kind="Simple"/>
+        <Communication destinationClassName="petrinet.logic.PetrinetObject"/>
+        <Communication destinationClassName="petrinet.logic.Transition"/>
+    </CommunicationClass>
+    <CommunicationClass name="petrinet.gui.JGraphPanel" x="443" y="114"/>
+    <CommunicationClass name="petrinet.gui.PNGuiTest" x="110" y="189">
         <Communication destinationClassName="petrinet.gui.PetrinetGUI"/>
         <Communication destinationClassName="petrinet.logic.Petrinet"/>
         <Communication destinationClassName="petrinet.logic.Arc"/>
     </CommunicationClass>
-    <CommunicationClass name="petrinet.logic.Arc" x="19" y="289">
+    <CommunicationClass name="petrinet.logic.Arc" x="131" y="552">
         <Extension destinationClassName="petrinet.logic.PetrinetObject"/>
         <Association destinationClassName="petrinet.logic.Arc.Direction"
             endpointName="direction" kind="Simple"/>
         <Association destinationClassName="petrinet.logic.Transition"
             endpointName="transition" kind="Simple"/>
-        <Association
-            destinationClassName="petrinet.logic.ArcEndType.EndType"
-            endpointName="toType" kind="Simple"/>
         <Association destinationClassName="petrinet.logic.Place"
             endpointName="place" kind="Simple"/>
-        <Association
-            destinationClassName="petrinet.logic.ArcEndType.EndType"
-            endpointName="fromType" kind="Simple"/>
         <Communication destinationClassName="petrinet.logic.Arc.Direction"/>
         <Communication destinationClassName="petrinet.logic.Place"/>
         <Communication destinationClassName="petrinet.logic.Transition"/>
     </CommunicationClass>
-    <CommunicationClass name="petrinet.gui.PlaceLabel" x="450" y="451">
+    <CommunicationClass name="petrinet.gui.PlaceLabel" x="832" y="367">
         <Association destinationClassName="petrinet.logic.Place"
             endpointName="place" kind="Simple"/>
         <Communication destinationClassName="petrinet.logic.Place"/>
     </CommunicationClass>
-    <CommunicationClass name="petrinet.logic.ArcEndType" x="670" y="50"/>
-    <CommunicationClass name="petrinet.gui.CirclePanel" x="662" y="353">
+    <CommunicationClass name="petrinet.gui.CirclePanel" x="8" y="28">
         <Association destinationClassName="petrinet.gui.Circle"
             endpointName="circle" kind="Simple"/>
         <Communication destinationClassName="petrinet.gui.Circle"/>
     </CommunicationClass>
-    <CommunicationClass name="master.NodeReader" x="228" y="3"/>
-    <CommunicationClass name="master.Importer" x="410" y="3">
+    <CommunicationClass name="master.NodeReader" x="328" y="12"/>
+    <CommunicationClass name="master.Importer" x="178" y="103">
         <Communication destinationClassName="master.NodeReader"/>
         <Communication destinationClassName="petrinet.logic.Petrinet"/>
     </CommunicationClass>
-    <CommunicationClass name="petrinet.logic.ArcEndType.EndType" x="671" y="182"/>
-    <CommunicationClass name="petrinet.gui.PetrinetGUI" x="555" y="289">
+    <CommunicationClass name="petrinet.gui.PetrinetGUI" x="393" y="174">
         <Association destinationClassName="petrinet.logic.Transition"
             endpointName="tList" kind="Simple"/>
         <Association destinationClassName="petrinet.gui.JGraphPanel"
@@ -74,15 +66,15 @@
         <Association destinationClassName="petrinet.logic.Petrinet"
             endpointName="pn" kind="Simple"/>
         <Association
-            destinationClassName="petrinet.gui.PetrinetGUI.TransitionButton"
+            destinationClassName="petrinet.gui.TransitionButton"
             endpointName="buttons" kind="Simple"/>
-        <Communication destinationClassName="petrinet.logic.PetrinetObject"/>
+        <Communication destinationClassName="master.Importer"/>
         <Communication destinationClassName="petrinet.logic.Transition"/>
         <Communication destinationClassName="petrinet.gui.JGraphPanel"/>
         <Communication destinationClassName="petrinet.logic.Petrinet"/>
         <Communication destinationClassName="petrinet.gui.PlaceLabel"/>
     </CommunicationClass>
-    <CommunicationClass name="petrinet.logic.Petrinet" x="412" y="137">
+    <CommunicationClass name="petrinet.logic.Petrinet" x="687" y="627">
         <Association destinationClassName="petrinet.logic.Arc"
             endpointName="arcs" kind="Simple"/>
         <Association destinationClassName="petrinet.logic.Transition"
@@ -91,11 +83,10 @@
             endpointName="places" kind="Simple"/>
         <Communication destinationClassName="petrinet.logic.Transition"/>
     </CommunicationClass>
-    <CommunicationClass name="master.PlaceNode" x="670" y="94"/>
-    <CommunicationClass name="master.MainApp" x="561" y="64">
+    <CommunicationClass name="master.MainApp" x="967" y="241">
+        <Communication destinationClassName="master.Importer"/>
         <Communication destinationClassName="petrinet.gui.PetrinetGUI"/>
         <Communication destinationClassName="petrinet.logic.Petrinet"/>
     </CommunicationClass>
-    <CommunicationClass name="petrinet.gui.Circle" x="676" y="262"/>
-    <CommunicationClass name="master.ArcNode" x="670" y="137"/>
+    <CommunicationClass name="petrinet.gui.Circle" x="26" y="90"/>
 </ClassDiagram>
