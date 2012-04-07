@@ -14,19 +14,19 @@ extends PetrinetObject {
     
 
     protected Place(String name, mxGraph graph) {
+    	this(name, 0, graph);
+    }
+
+    protected Place(String name, int initial, mxGraph graph) {
         super(name);
+        this.tokens = initial;
         String style = this.hasAtLeastTokens(1) ? HAS_TOKENS_STYLE : PLACE_STYLE;
-        
+
         // Add a vertex to the graph
 	    graph.getModel().beginUpdate();            
         this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0, 
         		PLACE_WIDTH, PLACE_HEIGHT, style);
         graph.getModel().endUpdate();
-    }
-
-    protected Place(String name, int initial, mxGraph graph) {
-        this(name, graph);
-        this.tokens = initial;
     }
 
     /**

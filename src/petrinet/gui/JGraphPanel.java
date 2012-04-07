@@ -11,15 +11,7 @@ import com.mxgraph.view.mxGraph;
  * Creates an MXGraph which can then be used by a layout mechanism in the calling class
  */
 public class JGraphPanel extends JPanel {
-	
-	final int PLACE_WIDTH = 80;
-	final int PLACE_HEIGHT = 30;
-	final int TRANSITION_WIDTH = 80;
-	final int TRANSITION_HEIGHT = 30;
-	final String PLACE_STYLE = "strokeColor=black;fillColor=gray";
-	final String TRANSITION_STYLE = "ROUNDED;strokeColor=green;fillColor=orange";
-	final String CAN_FIRE_STYLE = "ROUNDED;strokeColor=green;fillColor=green";
-	
+		
 	public mxGraph graph;
 	public mxGraphComponent graphComponent;
 	      
