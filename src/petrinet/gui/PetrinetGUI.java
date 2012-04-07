@@ -40,7 +40,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	static JFrame window = null;
 	private final static Color CAN_FIRE = Color.GREEN;
 	private final static Color NORMAL = Color.ORANGE;
-	private final static Color UNCONNECTED = Color.GRAY;
+	private final static Color UNCONNECTED = Color.RED;
 	private final static Color BORDERS = Color.BLACK;
 	public Petrinet pn;
 	private List<Transition> tList = null;
@@ -85,15 +85,21 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         
         //Help menu
         JMenu help = new JMenu("Help");
-        JMenuItem hFire = new JMenuItem("Can fire");
+        JMenuItem hFire = new JMenuItem("Can Fire");
         hFire.setBackground(CAN_FIRE);
         hFire.setEnabled(false);
-        JMenuItem hEmpty = new JMenuItem("Empty");
+        JMenuItem hEmpty = new JMenuItem("Cannot Fire");
         hEmpty.setBackground(NORMAL);
         hEmpty.setEnabled(false);
         JMenuItem hUnconnect = new JMenuItem("Unconnected");
         hUnconnect.setBackground(UNCONNECTED);
         hUnconnect.setEnabled(false);
+        JMenuItem hNoTokens = new JMenuItem("No Tokens");
+        hNoTokens.setBackground(Color.GRAY);
+        hNoTokens.setEnabled(false);
+        JMenuItem hHasTokens = new JMenuItem("Has Tokens");
+        hHasTokens.setBackground(Color.BLUE);
+        hHasTokens.setEnabled(false);
         JMenuItem homepage = new JMenuItem("Homepage");
         
        
@@ -113,6 +119,8 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         help.add(hFire);
         help.add(hEmpty);
         help.add(hUnconnect);
+        help.add(hNoTokens);
+        help.add(hHasTokens);
         help.add(homepage);
         homepage.addActionListener(this);
         
