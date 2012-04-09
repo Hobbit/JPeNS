@@ -243,7 +243,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 				} //Creates new PetrinetGUI object				
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Exit the application when the window is closed				
 				window.setLocation(50, 50); 				
-				window.setSize(800,600);//Set window size
+				window.setSize(850,650);//Set window size
 				window.setMinimumSize(new Dimension(500, 500));
 				window.setVisible(true); //Set window to visible
 			}
