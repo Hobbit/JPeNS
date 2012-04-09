@@ -1,5 +1,6 @@
 package petrinet.gui;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,7 +18,6 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class NodeForm extends JPanel implements ActionListener {
 	public final String types[] = {"", "Place", "Transition", "Arc"};
-	private String name = null;
 	private JComboBox type;
 	private JTextField nameField;
 	private JPanel customInputs;
@@ -28,16 +28,23 @@ public class NodeForm extends JPanel implements ActionListener {
 
 		JPanel defaultFields = new JPanel(new FlowLayout());
 		
+		// Add the Name field
 		JLabel nameFieldName = new JLabel("Name");
 		defaultFields.add(nameFieldName);
 
-		nameField = new JTextField();
+		nameField = new JTextField(15);
 		defaultFields.add(nameField);
+		
+		// Add the Type field
+		JLabel typeFieldName = new JLabel("Type");
+		defaultFields.add(typeFieldName);
 		
 		type = new JComboBox(types);
 		type.addActionListener(this);
 		defaultFields.add(type);
 
+		// Add a delete button
+		// We create a new action listener since the other one in this class is for the combo box
 		deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -53,13 +60,17 @@ public class NodeForm extends JPanel implements ActionListener {
 
 		this.add(defaultFields);
 		
+		// Add the custom fields
 		customInputs = new JPanel(new GridBagLayout());
-		this.add(customInputs);
-		
+		this.add(customInputs);	
 	}
 
 	public String getName() {
-		return this.name;
+		return nameField.getText();
+	}
+	
+	public String getType() {
+		return (String)type.getSelectedItem();
 	}
 	
 	/**
@@ -75,28 +86,29 @@ public class NodeForm extends JPanel implements ActionListener {
 		c.gridx = 0;
 		c.gridy = 0;
 
+		// Add the Place custom fields
 		if (command.equals("Place")) {
 			customInputs.removeAll();
 			
 			JLabel tokenFieldName = new JLabel("Number of Tokens:");
 			customInputs.add(tokenFieldName, c);
 			
-			JTextField tokenField = new JTextField();
-			tokenField.setColumns(5);
+			JTextField tokenField = new JTextField(5);
 			c.gridx = 1;
 			customInputs.add(tokenField, c);
 		} 
+		// Add the Transition custom fields
 		else if (command.equals("Transition")) {
 			customInputs.removeAll();
 		} 
+		// Add the Arc custom fields
 		else if (command.equals("Arc")) {
 			customInputs.removeAll();
 			
 			JLabel FromNodeFieldName = new JLabel("Name of 'From' node:");
 			customInputs.add(FromNodeFieldName, c);
 			
-			JTextField fromNodeField = new JTextField();
-			fromNodeField.setColumns(25);
+			JTextField fromNodeField = new JTextField(15);
 			c.gridx = 1;
 			customInputs.add(fromNodeField, c);
 			
@@ -105,11 +117,11 @@ public class NodeForm extends JPanel implements ActionListener {
 			JLabel ToNodeFieldName = new JLabel("Name of 'To' node:");
 			customInputs.add(ToNodeFieldName, c);
 			
-			JTextField toNodeField = new JTextField();
-			toNodeField.setColumns(25);
+			JTextField toNodeField = new JTextField(15);
 			c.gridx = 1;
 			customInputs.add(toNodeField, c);			
 		} 
+		// Empty out the custom fields
 		else {
 			customInputs.removeAll();
 		}
