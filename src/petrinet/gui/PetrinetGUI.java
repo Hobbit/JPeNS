@@ -133,45 +133,25 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		//Initialize buttons and labels arrays
 		buttons = new TransitionButton[tList.size()];
 		labels = new PlaceLabel[pList.size()];
-		
-		
+				
 		//Steps through each transition and creates a new button and initializes
 		//it to the appropriate status color.
 		for(int i = 0; i < tList.size(); i++){
 			buttons[i] = new TransitionButton(tList.get(i), this);
 			transitionsPanel.add(buttons[i]);
-			
-			if(tList.get(i).canFire()){
-				buttons[i].setBackground(Config.CAN_FIRE);
-			}else if(tList.get(i).isNotConnected()){
-				buttons[i].setBackground(Config.UNCONNECTED);
-			}else{
-				buttons[i].setBackground(Config.NORMAL);
-			}
 		}
 		contentPane.add("North", transitionsPanel);
 		
-		int lineNumber = 1;
 		// Add all of the PlaceLabels to the placesPanel for display
 		for(int i = 0; i < pList.size(); i++){
 			labels[i] = new PlaceLabel(pList.get(i));
 			c = new GridBagConstraints();
 			c.gridx = 1;
-			c.gridy = lineNumber;
+			c.gridy = i + 1;
 			c.ipadx = 10;
 			c.ipady = 10;
 			
 			placesPanel.add(labels[i], c);
-			//c.ipadx = 5;
-			//c.ipady = 5;
-			lineNumber++;
-			c.gridy = lineNumber; //moves to next line to draw tokens
-			
-			for(int n = 0; n < labels[i].getTokens(); n++){
-				c.gridx = 2 + n; 
-				//dots in here
-			}
-			lineNumber++;
 		}
 		contentPane.add("West", placesPanel);				
 		
@@ -277,18 +257,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	 * This method repaints the items on the screen after each firing
 	 */
 	public void refreshScreen(){
-		for(int i = 0; i < buttons.length; i++){
-			if(tList.get(i).canFire()){
-				buttons[i].setBackground(Config.CAN_FIRE);
-			}else if(tList.get(i).isNotConnected()){
-				buttons[i].setBackground(Config.UNCONNECTED);
-			}else{
-				buttons[i].setBackground(Config.NORMAL);
-			}
-			buttons[i].repaint();
+		for (TransitionButton button : buttons) {
+			button.Refresh();
 		}
-		for(int i = 0; i < labels.length; i++){
-			labels[i].repaint();
+		
+		for(PlaceLabel label : labels){
+			label.repaint();
 		}
 		
 		// Refresh the graph

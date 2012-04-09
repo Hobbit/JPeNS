@@ -25,6 +25,7 @@ public class TransitionButton extends JButton{
 		super(transition.getName());
 		this.transition = transition;
 		this.pnGui = view;
+		this.Refresh();
 		
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -39,6 +40,9 @@ public class TransitionButton extends JButton{
 		});
 	}
 	
+	/*
+	 * Updates the background color of the button based on the transition's status
+	 */
 	public void Refresh() {
 		if(transition.canFire()){
 			this.setBackground(Config.CAN_FIRE);
@@ -47,6 +51,7 @@ public class TransitionButton extends JButton{
 		}else{
 			this.setBackground(Config.NORMAL);
 		}
+		this.repaint();
 	}
 	
 	/**
