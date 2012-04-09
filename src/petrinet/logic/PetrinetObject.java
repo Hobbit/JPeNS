@@ -4,15 +4,6 @@ import com.mxgraph.model.mxCell;
 
 public class PetrinetObject {
 	
-	final int PLACE_WIDTH = 80;
-	final int PLACE_HEIGHT = 30;
-	final int TRANSITION_WIDTH = 80;
-	final int TRANSITION_HEIGHT = 30;
-	final String PLACE_STYLE = "shape=ellipse;perimter=ellipsePerimeter;strokeColor=black;fillColor=gray";
-	final String HAS_TOKENS_STYLE = "shape=ellipse;perimter=ellipsePerimeter;strokeColor=white;fillColor=blue";
-	final String TRANSITION_STYLE = "strokeColor=green;fillColor=orange";
-	final String CAN_FIRE_STYLE = "strokeColor=green;fillColor=green";
-
 	protected mxCell mxcell; 
 	
     private String name;

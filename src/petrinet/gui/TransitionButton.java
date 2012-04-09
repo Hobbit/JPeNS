@@ -1,5 +1,7 @@
 package petrinet.gui;
 
+import master.Config;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,6 +37,16 @@ public class TransitionButton extends JButton{
 				}			
 			} 
 		});
+	}
+	
+	public void Refresh() {
+		if(transition.canFire()){
+			this.setBackground(Config.CAN_FIRE);
+		}else if(transition.isNotConnected()){
+			this.setBackground(Config.UNCONNECTED);
+		}else{
+			this.setBackground(Config.NORMAL);
+		}
 	}
 	
 	/**

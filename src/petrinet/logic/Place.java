@@ -1,5 +1,7 @@
 package petrinet.logic;
 
+import master.Config;
+
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.model.mxCell;
 
@@ -20,12 +22,12 @@ extends PetrinetObject {
     protected Place(String name, int initial, mxGraph graph) {
         super(name);
         this.tokens = initial;
-        String style = this.hasAtLeastTokens(1) ? HAS_TOKENS_STYLE : PLACE_STYLE;
+        String style = this.hasAtLeastTokens(1) ? Config.HAS_TOKENS_STYLE : Config.PLACE_STYLE;
 
         // Add a vertex to the graph
 	    graph.getModel().beginUpdate();            
         this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0, 
-        		PLACE_WIDTH, PLACE_HEIGHT, style);
+        		Config.PLACE_WIDTH, Config.PLACE_HEIGHT, style);
         graph.getModel().endUpdate();
     }
 
@@ -73,20 +75,20 @@ extends PetrinetObject {
     public void addTokens(int weight) {
         this.tokens += weight;
         if(this.hasAtLeastTokens(1)){
-        	mxcell.setStyle(HAS_TOKENS_STYLE);
+        	mxcell.setStyle(Config.HAS_TOKENS_STYLE);
         }
         else{
-        	mxcell.setStyle(PLACE_STYLE);
+        	mxcell.setStyle(Config.PLACE_STYLE);
         }
     }
 
     public void removeTokens(int weight) {
         this.tokens -= weight;
         if(this.hasAtLeastTokens(1)){
-        	mxcell.setStyle(HAS_TOKENS_STYLE);
+        	mxcell.setStyle(Config.HAS_TOKENS_STYLE);
         }
         else{
-        	mxcell.setStyle(PLACE_STYLE);
+        	mxcell.setStyle(Config.PLACE_STYLE);
         }
     }
     

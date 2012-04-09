@@ -1,5 +1,7 @@
 package petrinet.logic;
 
+import master.Config;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,20 +9,19 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 
 public class Transition extends PetrinetObject{
+    private List<Arc> incoming = new ArrayList<Arc>();
+    private List<Arc> outgoing = new ArrayList<Arc>();
 
     public Transition(String name, mxGraph graph) {
         super(name);
-    	String style = this.canFire() ? CAN_FIRE_STYLE : TRANSITION_STYLE;
-
+    	String style = this.canFire() ? Config.CAN_FIRE_STYLE : Config.TRANSITION_STYLE;
+    	
         // Add a vertex to the graph
 	    graph.getModel().beginUpdate();            
 	    this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0,
-    			TRANSITION_WIDTH, TRANSITION_HEIGHT, style);
+    			Config.TRANSITION_WIDTH, Config.TRANSITION_HEIGHT, style);
 	    graph.getModel().endUpdate();
     }    
-
-    private List<Arc> incoming = new ArrayList<Arc>();
-    private List<Arc> outgoing = new ArrayList<Arc>();
     
     /**
      * Checks if the transition is able to fire
@@ -55,10 +56,10 @@ public class Transition extends PetrinetObject{
         
         // Update the style of the mxCell based on whether we can still fire or not
         if (canFire()) {
-        	mxcell.setStyle(CAN_FIRE_STYLE);
+        	mxcell.setStyle(Config.CAN_FIRE_STYLE);
         }
         else {
-        	mxcell.setStyle(TRANSITION_STYLE);
+        	mxcell.setStyle(Config.TRANSITION_STYLE);
         }
     }
     

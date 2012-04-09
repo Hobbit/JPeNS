@@ -1,6 +1,7 @@
 package petrinet.gui;
 
 import master.Importer;
+import master.Config;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -38,10 +39,6 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	 * Variables and Constants for the class
 	 */
 	static JFrame window = null;
-	private final static Color CAN_FIRE = Color.GREEN;
-	private final static Color NORMAL = Color.ORANGE;
-	private final static Color UNCONNECTED = Color.RED;
-	private final static Color BORDERS = Color.BLACK;
 	public Petrinet pn;
 	private List<Transition> tList = null;
 	private List<Place> pList = null;
@@ -70,7 +67,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		Container contentPane = getContentPane();
 		JPanel transitionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel placesPanel = new JPanel(new GridBagLayout());
-		placesPanel.setBorder(BorderFactory.createLineBorder(BORDERS));
+		placesPanel.setBorder(BorderFactory.createLineBorder(Config.BORDERS));
 		JLabel placesTitle = new JLabel("Places");
 		
 	
@@ -86,13 +83,13 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         //Help menu
         JMenu help = new JMenu("Help");
         JMenuItem hFire = new JMenuItem("Can Fire");
-        hFire.setBackground(CAN_FIRE);
+        hFire.setBackground(Config.CAN_FIRE);
         hFire.setEnabled(false);
         JMenuItem hEmpty = new JMenuItem("Cannot Fire");
-        hEmpty.setBackground(NORMAL);
+        hEmpty.setBackground(Config.NORMAL);
         hEmpty.setEnabled(false);
         JMenuItem hUnconnect = new JMenuItem("Unconnected");
-        hUnconnect.setBackground(UNCONNECTED);
+        hUnconnect.setBackground(Config.UNCONNECTED);
         hUnconnect.setEnabled(false);
         JMenuItem hNoTokens = new JMenuItem("No Tokens");
         hNoTokens.setBackground(Color.GRAY);
@@ -137,6 +134,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		buttons = new TransitionButton[tList.size()];
 		labels = new PlaceLabel[pList.size()];
 		
+		
 		//Steps through each transition and creates a new button and initializes
 		//it to the appropriate status color.
 		for(int i = 0; i < tList.size(); i++){
@@ -144,11 +142,11 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			transitionsPanel.add(buttons[i]);
 			
 			if(tList.get(i).canFire()){
-				buttons[i].setBackground(CAN_FIRE);
+				buttons[i].setBackground(Config.CAN_FIRE);
 			}else if(tList.get(i).isNotConnected()){
-				buttons[i].setBackground(UNCONNECTED);
+				buttons[i].setBackground(Config.UNCONNECTED);
 			}else{
-				buttons[i].setBackground(NORMAL);
+				buttons[i].setBackground(Config.NORMAL);
 			}
 		}
 		contentPane.add("North", transitionsPanel);
@@ -281,11 +279,11 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	public void refreshScreen(){
 		for(int i = 0; i < buttons.length; i++){
 			if(tList.get(i).canFire()){
-				buttons[i].setBackground(CAN_FIRE);
+				buttons[i].setBackground(Config.CAN_FIRE);
 			}else if(tList.get(i).isNotConnected()){
-				buttons[i].setBackground(UNCONNECTED);
+				buttons[i].setBackground(Config.UNCONNECTED);
 			}else{
-				buttons[i].setBackground(NORMAL);
+				buttons[i].setBackground(Config.NORMAL);
 			}
 			buttons[i].repaint();
 		}
