@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<petrinet>
+	<transition>
+		<name>T1</name>
+	</transition>	
+	<transition>
+		<name>T2</name>
+	</transition>		
+	<transition>
+		<name>T3</name>
+	</transition>		
+	<transition>
+		<name>T4</name>
+	</transition>		
+	<transition>
+		<name>T5</name>
+	</transition>		
+
+	<place>
+		<name>P1</name>
+		<tokens>1</tokens>
+	</place>
+	<place>
+		<name>P2</name>
+		<tokens>3</tokens>
+	</place>	
+	<place>
+		<name>P3</name>
+		<tokens>1</tokens>
+	</place>	
+	<place>
+		<name>P4</name>
+		<tokens>1</tokens>
+	</place>	
+	<place>
+		<name>P5</name>
+		<tokens>1</tokens>
+	</place>	
+	<place>
+		<name>P6</name>
+		<tokens>1</tokens>
+	</place>	
+	<place>
+		<name>P7</name>
+		<tokens>1</tokens>
+	</place>	
+
+	<arc>
+		<name>A1</name>
+		<from type="place">P1</from>
+		<to type="transition">T5</to>
+	</arc>	
+	<arc>
+		<name>A2</name>
+		<from type="place">P2</from>
+		<to type="transition">T1</to>
+	</arc>	
+	<arc>
+		<name>A3</name>
+		<from type="place">P3</from>
+		<to type="transition">T2</to>
+	</arc>	
+	<arc>
+		<name>A4</name>
+		<from type="transition">T2</from>
+		<to type="place">P4</to>
+	</arc>	
+	<arc>
+		<name>A5</name>
+		<from type="place">P4</from>
+		<to type="transition">T3</to>
+	</arc>	
+	<arc>
+		<name>A6</name>
+		<from type="transition">T3</from>
+		<to type="place">P5</to>
+	</arc>	
+	<arc>
+		<name>A7</name>
+		<from type="transition">T1</from>
+		<to type="place">P6</to>
+	</arc>	
+	<arc>
+		<name>A8</name>
+		<from type="place">P6</from>
+		<to type="transition">T4</to>
+	</arc>	
+	<arc>
+		<name>A9</name>
+		<from type="transition">T4</from>
+		<to type="place">P7</to>
+	</arc>	
+	<arc>
+		<name>A10</name>
+		<from type="place">P7</from>
+		<to type="transition">T5</to>
+	</arc>	
+	<arc>
+		<name>A11</name>
+		<from type="place">P5</from>
+		<to type="transition">T4</to>
+	</arc>	
+</petrinet>

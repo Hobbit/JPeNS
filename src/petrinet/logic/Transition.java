@@ -11,11 +11,13 @@ import com.mxgraph.view.mxGraph;
 public class Transition extends PetrinetObject{
     private List<Arc> incoming = new ArrayList<Arc>();
     private List<Arc> outgoing = new ArrayList<Arc>();
-
+    private mxGraph graph;
+    
     public Transition(String name, mxGraph graph) {
         super(name);
+        this.graph = graph;
     	String style = this.canFire() ? Config.CAN_FIRE_STYLE : Config.TRANSITION_STYLE;
-    	
+   	
         // Add a vertex to the graph
 	    graph.getModel().beginUpdate();            
 	    this.mxcell = (mxCell)graph.insertVertex(graph.getDefaultParent(), null, name, 0, 0,
@@ -42,6 +44,14 @@ public class Transition extends PetrinetObject{
         return canFire;
     }
     
+    // Update the style of the mxCell based on whether we can still fire or not
+    public void Refresh() {
+    	String style = this.canFire() ? Config.CAN_FIRE_STYLE : Config.TRANSITION_STYLE;  
+	    graph.getModel().beginUpdate();
+    	mxcell.setStyle(style);
+		graph.getModel().endUpdate();
+    }
+    
     /**
      * Fire the transition
      */
@@ -54,13 +64,7 @@ public class Transition extends PetrinetObject{
             arc.fire();
         }
         
-        // Update the style of the mxCell based on whether we can still fire or not
-        if (canFire()) {
-        	mxcell.setStyle(Config.CAN_FIRE_STYLE);
-        }
-        else {
-        	mxcell.setStyle(Config.TRANSITION_STYLE);
-        }
+        Refresh();
     }
     
     /**

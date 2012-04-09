@@ -30,10 +30,8 @@ public class TransitionButton extends JButton{
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(transition.canFire()){
-				    pnGui.pn.graph.getModel().beginUpdate();
 					transition.fire();
 					fireStateChanged();
-					pnGui.pn.graph.getModel().endUpdate();
 					pnGui.refreshScreen();
 				}			
 			} 

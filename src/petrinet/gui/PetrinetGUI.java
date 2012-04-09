@@ -98,8 +98,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         hHasTokens.setBackground(Color.BLUE);
         hHasTokens.setEnabled(false);
         JMenuItem homepage = new JMenuItem("Homepage");
-        
-       
+               
         
         //File menu items with action listeners
         menuBar.add(file);
@@ -145,11 +144,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		// Add all of the PlaceLabels to the placesPanel for display
 		for(int i = 0; i < pList.size(); i++){
 			labels[i] = new PlaceLabel(pList.get(i));
-			c = new GridBagConstraints();
-			c.gridx = 1;
 			c.gridy = i + 1;
-			c.ipadx = 10;
-			c.ipady = 10;
 			
 			placesPanel.add(labels[i], c);
 		}
@@ -160,6 +155,9 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		 */    	    
 	    graphPan = new JGraphPanel(pn.graph);
 	    contentPane.add("Center", graphPan.graphComponent);
+	    
+	    //Now that everything has been created, refresh the screen so that everything has appropriate styles
+	    refreshScreen();
 	}
 	
 	/**
@@ -263,6 +261,10 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		
 		for(PlaceLabel label : labels){
 			label.repaint();
+		}
+		
+		for (Transition trans : tList) {
+			trans.Refresh();
 		}
 		
 		// Refresh the graph
