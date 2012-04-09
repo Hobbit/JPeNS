@@ -1,13 +1,14 @@
 package petrinet.gui;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,24 +21,50 @@ public class NodeForm extends JPanel implements ActionListener {
 	private JComboBox type;
 	private JTextField nameField;
 	private JPanel customInputs;
+	private JButton deleteButton;
 	
 	public NodeForm() {
-		nameField = new JTextField("Name");
-		this.add(nameField);
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new GridLayout(2, 1));
+
+		JPanel defaultFields = new JPanel(new FlowLayout());
+		
+		JLabel nameFieldName = new JLabel("Name");
+		defaultFields.add(nameFieldName);
+
+		nameField = new JTextField();
+		defaultFields.add(nameField);
+		
 		type = new JComboBox(types);
 		type.addActionListener(this);
-		this.add(type);
+		defaultFields.add(type);
+
+		deleteButton = new JButton("Delete");
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// When the delete button is clicked, find the containing panel and delete it
+				JButton delButton = (JButton)e.getSource();
+				// The parent of the button is defaultFields, it's parent is a NodeForm, it's parent is a NetBuilder
+				JPanel parent = (JPanel)delButton.getParent().getParent().getParent();
+				parent.remove(delButton.getParent().getParent());
+				parent.updateUI();
+			} 
+		});		
+		defaultFields.add(deleteButton);
+
+		this.add(defaultFields);
 		
-		customInputs = new JPanel();
-		customInputs.setLayout(new GridBagLayout());
+		customInputs = new JPanel(new GridBagLayout());
 		this.add(customInputs);
+		
 	}
 
 	public String getName() {
 		return this.name;
 	}
 	
+	/**
+	 * When the user selects a type of Petri Net object, load the proper fields for the type
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComboBox jBox = (JComboBox)e.getSource();
@@ -47,8 +74,6 @@ public class NodeForm extends JPanel implements ActionListener {
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
-//		c.ipadx = 10;
-//		c.ipady = 10;
 
 		if (command.equals("Place")) {
 			customInputs.removeAll();
@@ -83,7 +108,7 @@ public class NodeForm extends JPanel implements ActionListener {
 			JTextField toNodeField = new JTextField();
 			toNodeField.setColumns(25);
 			c.gridx = 1;
-			customInputs.add(toNodeField);			
+			customInputs.add(toNodeField, c);			
 		} 
 		else {
 			customInputs.removeAll();
