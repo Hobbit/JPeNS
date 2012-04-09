@@ -172,7 +172,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			//Create a new netBuilder window
 			netBuilder = new NetBuilder("Create a New Network");
 			netBuilder.setVisible(true);
-			netBuilder.setSize(400, 600);
+			netBuilder.setSize(500, 600);
 			netBuilder.setResizable(true);
 	    	GridBagConstraints c = new GridBagConstraints();
 		}else if(buttonString.equals("Import")){

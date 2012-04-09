@@ -42,10 +42,10 @@ public class NetBuilder extends JFrame implements ActionListener {
 		
 		// Add the new form to the panel
 		nodesPanel.add(form);
-		nodesPanel.validate();
-		this.validate();
+		nodesPanel.updateUI();
 	}
 	
+	@Override
 	public void actionPerformed(ActionEvent e){
 		InsertForm();
 	}
