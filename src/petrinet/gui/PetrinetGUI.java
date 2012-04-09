@@ -2,6 +2,7 @@ package petrinet.gui;
 
 import master.Importer;
 import master.Config;
+import master.NetBuilder;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -49,6 +50,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 	private JButton confirmYes = null;
  	private JButton confirmNo = null;
  	private JLabel confirmLabel = null;
+ 	private JFrame netBuilder = null;
 
 	/**
 	 * Default constructor for the petrinet gui
@@ -167,8 +169,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		String buttonString = e.getActionCommand( );
 		
 		if(buttonString.equals("New")){
-			//To be implemented
-			JOptionPane.showMessageDialog(PetrinetGUI.this, "We are still working on implementing the new network feature");
+			//Create a new netBuilder window
+			netBuilder = new NetBuilder("Create a New Network");
+			netBuilder.setVisible(true);
+			netBuilder.setSize(400, 600);
+			netBuilder.setResizable(true);
+	    	GridBagConstraints c = new GridBagConstraints();
 		}else if(buttonString.equals("Import")){
 			//To be implemented fully
 			JFileChooser fileBrowser = new JFileChooser();
