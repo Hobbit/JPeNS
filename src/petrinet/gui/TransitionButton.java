@@ -14,6 +14,7 @@ import petrinet.logic.Transition;
 public class TransitionButton extends JButton{
 	private Transition transition;
 	private PetrinetGUI pnGui;
+	
 	/**
 	 * Default constructor for Transition Buttons
 	 * @param transition

@@ -29,8 +29,9 @@ public class JGraphPanel extends JPanel {
 	 */
 	private void DrawGraph() {
 	    graphComponent = new mxGraphComponent(graph);
-	    
+	    	    
 	    mxOrganicLayout organic = new mxOrganicLayout(graph);
+	    organic.setAverageNodeArea(40000);
 	    organic.execute(defaultParent);
 	}
 	
