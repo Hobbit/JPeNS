@@ -19,6 +19,10 @@ public class NetBuilder extends JFrame implements ActionListener {
 	final String ADD_NODE = "Add";
 	final String EXPORT_FORM = "Export";
 	
+	/**
+	 * Builds a frame that allows a user to create new nodes for a petrinet graph
+	 * @param name what to title the frame
+	 */
 	public NetBuilder(String name){
 		super(name);
 		this.setLayout(new BorderLayout());
@@ -56,11 +60,7 @@ public class NetBuilder extends JFrame implements ActionListener {
 		nodesPanel.add(form);
 		nodesPanel.updateUI();
 	}
-	
-	private void ExportToXml() {
 		
-	}
-	
 	@Override
 	public void actionPerformed(ActionEvent e){
 		String command = e.getActionCommand();
@@ -68,8 +68,16 @@ public class NetBuilder extends JFrame implements ActionListener {
 			InsertForm();
 		}
 		else if (command.equals(EXPORT_FORM)) {
-			ExportToXml();
-			this.setVisible(false);
+			JFileChooser chooser = new JFileChooser("Where would you like to save your file?");
+			int returnVal = chooser.showSaveDialog(this);
+			
+			// If the user selected a file, lets export to it
+			if (returnVal == JFileChooser.APPROVE_OPTION){
+			
+				Exporter ex = new Exporter(nodeForms);
+				ex.Export(chooser.getSelectedFile());
+				this.setVisible(false);
+			}
 		}
 	}
 }

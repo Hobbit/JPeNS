@@ -1,6 +1,5 @@
 package petrinet.gui;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -17,11 +15,17 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class NodeForm extends JPanel implements ActionListener {
-	public final String types[] = {"", "Place", "Transition", "Arc"};
+	private final String types[] = {"", "Place", "Transition", "Arc"};
+	private final String arcEndTypes[] = {"Place", "Transition"};
 	private JComboBox type;
 	private JTextField nameField;
 	private JPanel customInputs;
 	private JButton deleteButton;
+	private JTextField tokenField;
+	private JTextField fromNodeField;
+	private JTextField toNodeField;
+	private JComboBox fromNodeType;
+	private JComboBox toNodeType;
 	
 	public NodeForm() {
 		this.setLayout(new GridLayout(2, 1));
@@ -73,6 +77,32 @@ public class NodeForm extends JPanel implements ActionListener {
 		return (String)type.getSelectedItem();
 	}
 	
+	public int getTokens() {
+		String val = tokenField.getText();
+		try {
+			return Integer.parseInt(val);
+		}
+		catch (Exception e) {
+			return 0;
+		}
+	}
+	
+	public String getFromType() {
+		return (String)fromNodeType.getSelectedItem();
+	}
+	
+	public String getToType() {
+		return (String)toNodeType.getSelectedItem();
+	}
+	
+	public String getFromName() {
+		return fromNodeField.getText();
+	}
+	
+	public String getToName() {
+		return toNodeField.getText();
+	}
+	
 	/**
 	 * When the user selects a type of Petri Net object, load the proper fields for the type
 	 */
@@ -93,7 +123,7 @@ public class NodeForm extends JPanel implements ActionListener {
 			JLabel tokenFieldName = new JLabel("Number of Tokens:");
 			customInputs.add(tokenFieldName, c);
 			
-			JTextField tokenField = new JTextField(5);
+			tokenField = new JTextField(5);
 			c.gridx = 1;
 			customInputs.add(tokenField, c);
 		} 
@@ -108,17 +138,36 @@ public class NodeForm extends JPanel implements ActionListener {
 			JLabel FromNodeFieldName = new JLabel("Name of 'From' node:");
 			customInputs.add(FromNodeFieldName, c);
 			
-			JTextField fromNodeField = new JTextField(15);
+			c.gridx = 1;
+			JLabel fromNodeTypeName = new JLabel("Type of 'From' node:");
+			customInputs.add(fromNodeTypeName, c);
+			
+			c.gridy = 1;
+			c.gridx = 0;
+			fromNodeType = new JComboBox(arcEndTypes);
+			customInputs.add(fromNodeType, c);
+			
+			c.gridx = 1;
+			fromNodeField = new JTextField(15);
 			c.gridx = 1;
 			customInputs.add(fromNodeField, c);
 			
-			c.gridy = 1;
+			c.gridy = 2;
+			c.gridx = 0;
+			JLabel toNodeTypeName = new JLabel("Type of 'To' node:");
+			customInputs.add(toNodeTypeName, c);
+			
+			c.gridx = 1;
+			toNodeType = new JComboBox(arcEndTypes);
+			customInputs.add(toNodeType, c);
+			
+			c.gridy = 3;
 			c.gridx = 0;
 			JLabel ToNodeFieldName = new JLabel("Name of 'To' node:");
 			customInputs.add(ToNodeFieldName, c);
 			
-			JTextField toNodeField = new JTextField(15);
 			c.gridx = 1;
+			toNodeField = new JTextField(15);
 			customInputs.add(toNodeField, c);			
 		} 
 		// Empty out the custom fields

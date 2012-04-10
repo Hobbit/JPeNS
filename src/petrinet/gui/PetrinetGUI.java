@@ -170,7 +170,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		
 		if(buttonString.equals("New")){
 			//Create a new netBuilder window
-			netBuilder = new NetBuilder("Create a New Network");
+			netBuilder = new NetBuilder("Create a New Petri Net");
 			netBuilder.setVisible(true);
 			netBuilder.setSize(500, 600);
 			netBuilder.setResizable(true);
