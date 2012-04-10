@@ -25,7 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -174,8 +173,8 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 			netBuilder.setVisible(true);
 			netBuilder.setSize(500, 600);
 			netBuilder.setResizable(true);
-	    	GridBagConstraints c = new GridBagConstraints();
-		}else if(buttonString.equals("Import")){
+		}
+		else if(buttonString.equals("Import")){
 			//To be implemented fully
 			JFileChooser fileBrowser = new JFileChooser();
 			int returnVal = fileBrowser.showOpenDialog(PetrinetGUI.this);
@@ -188,7 +187,8 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 				petrinet.gui.PetrinetGUI.displayPetrinet(pn);
 		    }
 			
-		}else if(buttonString.equals("Quit")){
+		}
+		else if(buttonString.equals("Quit")){
 			//create a new quit confirmation window
 	    	confirm = new JFrame("Quit?");
 	    	confirmYes = new JButton("Yes");

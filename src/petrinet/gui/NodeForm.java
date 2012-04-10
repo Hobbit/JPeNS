@@ -1,5 +1,6 @@
 package petrinet.gui;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -16,7 +18,7 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class NodeForm extends JPanel implements ActionListener {
 	private final String types[] = {"", "Place", "Transition", "Arc"};
-	private final String arcEndTypes[] = {"Place", "Transition"};
+	private final String arcDirections[] = {"Place --> Transition", "Transition --> Place"};
 	private JComboBox type;
 	private JTextField nameField;
 	private JPanel customInputs;
@@ -29,6 +31,7 @@ public class NodeForm extends JPanel implements ActionListener {
 	
 	public NodeForm() {
 		this.setLayout(new GridLayout(2, 1));
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		JPanel defaultFields = new JPanel(new FlowLayout());
 		
@@ -68,40 +71,6 @@ public class NodeForm extends JPanel implements ActionListener {
 		customInputs = new JPanel(new GridBagLayout());
 		this.add(customInputs);	
 	}
-
-	public String getName() {
-		return nameField.getText();
-	}
-	
-	public String getType() {
-		return (String)type.getSelectedItem();
-	}
-	
-	public int getTokens() {
-		String val = tokenField.getText();
-		try {
-			return Integer.parseInt(val);
-		}
-		catch (Exception e) {
-			return 0;
-		}
-	}
-	
-	public String getFromType() {
-		return (String)fromNodeType.getSelectedItem();
-	}
-	
-	public String getToType() {
-		return (String)toNodeType.getSelectedItem();
-	}
-	
-	public String getFromName() {
-		return fromNodeField.getText();
-	}
-	
-	public String getToName() {
-		return toNodeField.getText();
-	}
 	
 	/**
 	 * When the user selects a type of Petri Net object, load the proper fields for the type
@@ -123,7 +92,7 @@ public class NodeForm extends JPanel implements ActionListener {
 			JLabel tokenFieldName = new JLabel("Number of Tokens:");
 			customInputs.add(tokenFieldName, c);
 			
-			tokenField = new JTextField(5);
+			tokenField = new JTextField("0", 5);
 			c.gridx = 1;
 			customInputs.add(tokenField, c);
 		} 
@@ -139,7 +108,7 @@ public class NodeForm extends JPanel implements ActionListener {
 			customInputs.add(fromNodeTypeName, c);
 			
 			c.gridx = 1;
-			fromNodeType = new JComboBox(arcEndTypes);
+			fromNodeType = new JComboBox(arcDirections);
 			customInputs.add(fromNodeType, c);
 			
 			c.gridy = 1;
@@ -157,7 +126,7 @@ public class NodeForm extends JPanel implements ActionListener {
 			customInputs.add(toNodeTypeName, c);
 			
 			c.gridx = 1;
-			toNodeType = new JComboBox(arcEndTypes);
+			toNodeType = new JComboBox(arcDirections);
 			customInputs.add(toNodeType, c);
 			
 			c.gridy = 3;
@@ -178,6 +147,48 @@ public class NodeForm extends JPanel implements ActionListener {
 		customInputs.updateUI();
 	}	
 
-
+	public String getName() {
+		return nameField.getText();
+	}
+	
+	public String getType() {
+		return (String)type.getSelectedItem();
+	}
+	
+	public int getTokens() {
+		String val = tokenField.getText();
+		try {
+			return Integer.parseInt(val);
+		}
+		catch (Exception e) {
+			return 0;
+		}
+	}
+	
+	public String getFromType() {
+		if (((String)fromNodeType.getSelectedItem()).equals("Place --> Transition")) {
+			return "place";
+		}
+		else {
+			return "transition";
+		}
+	}
+	
+	public String getToType() {
+		if (((String)fromNodeType.getSelectedItem()).equals("Place --> Transition")) {
+			return "transition";
+		}
+		else {
+			return "place";
+		}
+	}
+	
+	public String getFromName() {
+		return fromNodeField.getText();
+	}
+	
+	public String getToName() {
+		return toNodeField.getText();
+	}
 }
 

@@ -25,12 +25,15 @@ public class NetBuilder extends JFrame implements ActionListener {
 	 */
 	public NetBuilder(String name){
 		super(name);
+		this.setLocation(200, 100);
 		this.setLayout(new BorderLayout());
 		
 		Container contentPane = getContentPane();
-		
+				
 		nodesPanel.setLayout(new BoxLayout(nodesPanel, BoxLayout.Y_AXIS));
-		contentPane.add(nodesPanel, BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(nodesPanel);
+		
+		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
 		//Add an initial form
 		InsertForm();
@@ -40,10 +43,12 @@ public class NetBuilder extends JFrame implements ActionListener {
 		
 		JButton addFormButton = new JButton(ADD_NODE);
 		addFormButton.addActionListener(this);
+		addFormButton.setToolTipText("Add a new node to the Petri net");
 		adminButtons.add(addFormButton);
 		
 		JButton export = new JButton("Export");
 		export.addActionListener(this);
+		export.setToolTipText("Export your Petri net to an XML file");
 		adminButtons.add(export);
 		
 		contentPane.add(adminButtons, BorderLayout.SOUTH);
