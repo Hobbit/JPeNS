@@ -185,8 +185,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 				Importer.Import(pn.getFilepath(), pn);
 				window.dispose();
 				petrinet.gui.PetrinetGUI.displayPetrinet(pn);
-		    }
-			
+		    }			
 		}
 		else if(buttonString.equals("Quit")){
 			//create a new quit confirmation window

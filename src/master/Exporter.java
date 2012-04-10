@@ -50,80 +50,76 @@ public class Exporter {
 	 * @param file that you want the XML output to be saved to
 	 */
 	public void Export(File file) {
-		try {
-			 
-			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-	 
-			// root element
-			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("petrinet");
-			doc.appendChild(rootElement);
-	 
-			// transition elements
-			for (NodeForm node : transNodes) {
-				Element transition = doc.createElement("transition");
+		try {			 
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+		 
+				// root element
+				Document doc = docBuilder.newDocument();
+				Element rootElement = doc.createElement("petrinet");
+				doc.appendChild(rootElement);
+		 
+				// transition elements
+				for (NodeForm node : transNodes) {
+					Element transition = doc.createElement("transition");
+					
+					Element name = doc.createElement("name");
+					name.appendChild(doc.createTextNode(node.getName()));
+					transition.appendChild(name);
+					
+					rootElement.appendChild(transition);
+				}
+		 
+				// place elements
+				for (NodeForm node : placeNodes) {
+					Element place = doc.createElement("place");
+	
+					Element name = doc.createElement("name");
+					name.appendChild(doc.createTextNode(node.getName()));
+					place.appendChild(name);
+	
+					Element tokens = doc.createElement("tokens");
+					tokens.appendChild(doc.createTextNode(Integer.toString(node.getTokens())));
+					place.appendChild(tokens);
+					
+					rootElement.appendChild(place);
+				}
 				
-				Element name = doc.createElement("name");
-				name.appendChild(doc.createTextNode(node.getName()));
-				transition.appendChild(name);
-				
-				rootElement.appendChild(transition);
-			}
-	 
-			// place elements
-			for (NodeForm node : placeNodes) {
-				Element place = doc.createElement("place");
-
-				Element name = doc.createElement("name");
-				name.appendChild(doc.createTextNode(node.getName()));
-				place.appendChild(name);
-
-				Element tokens = doc.createElement("tokens");
-				tokens.appendChild(doc.createTextNode(Integer.toString(node.getTokens())));
-				place.appendChild(tokens);
-				
-				rootElement.appendChild(place);
-			}
-			
-			// arc elements
-			for (NodeForm node : arcNodes) {
-				Element arc = doc.createElement("arc");
-				
-				Element name = doc.createElement("name");
-				name.appendChild(doc.createTextNode(node.getName()));
-				arc.appendChild(name);
-				
-				Element from = doc.createElement("from");
-				from.setAttribute("type", node.getFromType().toLowerCase());
-				from.appendChild(doc.createTextNode(node.getFromName()));
-				arc.appendChild(from);
-				
-				Element to = doc.createElement("to");
-				to.setAttribute("type", node.getToType().toLowerCase());
-				to.appendChild(doc.createTextNode(node.getToName()));
-				arc.appendChild(to);
-				
-				rootElement.appendChild(arc);
-			}
-				 	 	 
-			// write the content into xml file
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(file);
-	 
-			// Output to console for testing
-			// StreamResult result = new StreamResult(System.out);
-	 
-			transformer.transform(source, result);
-	 
-			System.out.println("File saved!");
+				// arc elements
+				for (NodeForm node : arcNodes) {
+					Element arc = doc.createElement("arc");
+					
+					Element name = doc.createElement("name");
+					name.appendChild(doc.createTextNode(node.getName()));
+					arc.appendChild(name);
+					
+					Element from = doc.createElement("from");
+					from.setAttribute("type", node.getFromType().toLowerCase());
+					from.appendChild(doc.createTextNode(node.getFromName()));
+					arc.appendChild(from);
+					
+					Element to = doc.createElement("to");
+					to.setAttribute("type", node.getToType().toLowerCase());
+					to.appendChild(doc.createTextNode(node.getToName()));
+					arc.appendChild(to);
+					
+					rootElement.appendChild(arc);
+				}
+					 	 	 
+				// write the content into xml file
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+				StreamResult result = new StreamResult(file);
+		 	 
+				transformer.transform(source, result);
+		 
+				System.out.println("File saved!");
 	 
 		  } catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
+			  pce.printStackTrace();
 		  } catch (TransformerException tfe) {
-			tfe.printStackTrace();
+			  tfe.printStackTrace();
 		  }
 	}
 }

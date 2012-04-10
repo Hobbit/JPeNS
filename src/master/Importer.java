@@ -16,8 +16,6 @@ import petrinet.logic.Arc;
 
 public class Importer
 {
-	private static final boolean PRINT_DIAG_INFO = false;
-
 	public static void Import(String filepath, Petrinet pn)
 	{
 		try
@@ -77,7 +75,7 @@ public class Importer
 				{
 					for (TransitionNode tran : transitions)
 					{
-						if (PRINT_DIAG_INFO)
+						if (Config.PRINT_DIAG_INFO)
 						{
 							System.out.println("=====================\nTransition: ");
 			                System.out.println("Name: " + tran.Name);
@@ -97,7 +95,7 @@ public class Importer
 				{
 			        for (PlaceNode place : places) 
 					{
-						if (PRINT_DIAG_INFO)
+						if (Config.PRINT_DIAG_INFO)
 						{
 			                System.out.println("=====================\nPlace: ");
 							System.out.println("Name: " + place.Name);
@@ -134,7 +132,7 @@ public class Importer
                             System.exit(1);
                         }
 
-						if (PRINT_DIAG_INFO)
+						if (Config.PRINT_DIAG_INFO)
 						{
 			                System.out.println("=====================\nArc: ");
 							System.out.println("Name: " + arc.Name);

@@ -3,6 +3,8 @@ package master;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class NetBuilder extends JFrame implements ActionListener {
 		
 		Container contentPane = getContentPane();
 				
-		nodesPanel.setLayout(new BoxLayout(nodesPanel, BoxLayout.Y_AXIS));
+		nodesPanel.setLayout(new GridBagLayout());
 		JScrollPane scrollPane = new JScrollPane(nodesPanel);
 		
 		contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -62,7 +64,7 @@ public class NetBuilder extends JFrame implements ActionListener {
 		nodeForms.add(form);
 		
 		// Add the new form to the panel
-		nodesPanel.add(form);
+		nodesPanel.add(form, Config.constraints());
 		nodesPanel.updateUI();
 	}
 		
