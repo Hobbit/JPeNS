@@ -135,21 +135,20 @@ public class NodeForm extends JPanel implements ActionListener {
 		else if (command.equals("Arc")) {
 			customInputs.removeAll();
 			
+			JLabel fromNodeTypeName = new JLabel("Type of 'From' node:");
+			customInputs.add(fromNodeTypeName, c);
+			
+			c.gridx = 1;
+			fromNodeType = new JComboBox(arcEndTypes);
+			customInputs.add(fromNodeType, c);
+			
+			c.gridy = 1;
+			c.gridx = 0;
 			JLabel FromNodeFieldName = new JLabel("Name of 'From' node:");
 			customInputs.add(FromNodeFieldName, c);
 			
 			c.gridx = 1;
-			JLabel fromNodeTypeName = new JLabel("Type of 'From' node:");
-			customInputs.add(fromNodeTypeName, c);
-			
-			c.gridy = 1;
-			c.gridx = 0;
-			fromNodeType = new JComboBox(arcEndTypes);
-			customInputs.add(fromNodeType, c);
-			
-			c.gridx = 1;
 			fromNodeField = new JTextField(15);
-			c.gridx = 1;
 			customInputs.add(fromNodeField, c);
 			
 			c.gridy = 2;

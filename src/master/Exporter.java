@@ -18,6 +18,10 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * Given a list of NodeForms, XML output is generated that is compatible with the 
+ * Petrinet Import tool
+ */
 public class Exporter {
 	private ArrayList<NodeForm> placeNodes = new ArrayList<NodeForm>();
 	private ArrayList<NodeForm> transNodes = new ArrayList<NodeForm>();
@@ -42,6 +46,10 @@ public class Exporter {
 		
 	}
 	
+	/**
+	 * Exports a list of NodeForm's to the given file
+	 * @param file that you want the XML output to be saved to
+	 */
 	public void Export(File file) {
 		try {
 			 
@@ -56,46 +64,50 @@ public class Exporter {
 			// transition elements
 			for (NodeForm node : transNodes) {
 				Element transition = doc.createElement("transition");
+				
 				Element name = doc.createElement("name");
 				name.appendChild(doc.createTextNode(node.getName()));
 				transition.appendChild(name);
+				
 				rootElement.appendChild(transition);
 			}
 	 
 			// place elements
 			for (NodeForm node : placeNodes) {
 				Element place = doc.createElement("place");
+
 				Element name = doc.createElement("name");
 				name.appendChild(doc.createTextNode(node.getName()));
 				place.appendChild(name);
-				rootElement.appendChild(doc.createTextNode(Integer.toString(node.getTokens())));
+
+				Element tokens = doc.createElement("tokens");
+				tokens.appendChild(doc.createTextNode(Integer.toString(node.getTokens())));
+				place.appendChild(tokens);
+				
+				rootElement.appendChild(place);
 			}
 			
 			// arc elements
 			for (NodeForm node : arcNodes) {
-				Element arc = doc.createElement("place");
+				Element arc = doc.createElement("arc");
+				
 				Element name = doc.createElement("name");
 				name.appendChild(doc.createTextNode(node.getName()));
 				arc.appendChild(name);
-				rootElement.appendChild(doc.createTextNode(Integer.toString(node.getTokens())));
+				
+				Element from = doc.createElement("from");
+				from.setAttribute("type", node.getFromType().toLowerCase());
+				from.appendChild(doc.createTextNode(node.getFromName()));
+				arc.appendChild(from);
+				
+				Element to = doc.createElement("to");
+				to.setAttribute("type", node.getToType().toLowerCase());
+				to.appendChild(doc.createTextNode(node.getToName()));
+				arc.appendChild(to);
+				
+				rootElement.appendChild(arc);
 			}
-			
-			Element arc = doc.createElement("Arc");
-			rootElement.appendChild(arc);
-
-			// set attribute to Arc element
-			Attr attr = doc.createAttribute("");
-			attr.setValue("1");
-			arc.setAttributeNode(attr);
-	 
-			// shorten way
-			// staff.setAttribute("id", "1");
-	 
-			// firstname elements
-			Element firstname = doc.createElement("firstname");
-			firstname.appendChild(doc.createTextNode("yong"));
-			//transition.appendChild(firstname);
-	 	 
+				 	 	 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
