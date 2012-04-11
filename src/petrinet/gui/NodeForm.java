@@ -26,8 +26,7 @@ public class NodeForm extends JPanel implements ActionListener {
 	private JTextField tokenField;
 	private JTextField fromNodeField;
 	private JTextField toNodeField;
-	private JComboBox fromNodeType;
-	private JComboBox toNodeType;
+	private JComboBox arcDirectionField;
 	
 	public NodeForm() {
 		this.setLayout(new GridLayout(2, 1));
@@ -104,12 +103,12 @@ public class NodeForm extends JPanel implements ActionListener {
 		else if (command.equals("Arc")) {
 			customInputs.removeAll();
 			
-			JLabel fromNodeTypeName = new JLabel("Type of 'From' node:");
-			customInputs.add(fromNodeTypeName, c);
+			JLabel arcDirection = new JLabel("Direction of arc:");
+			customInputs.add(arcDirection, c);
 			
 			c.gridx = 1;
-			fromNodeType = new JComboBox(arcDirections);
-			customInputs.add(fromNodeType, c);
+			arcDirectionField = new JComboBox(arcDirections);
+			customInputs.add(arcDirectionField, c);
 			
 			c.gridy = 1;
 			c.gridx = 0;
@@ -122,21 +121,12 @@ public class NodeForm extends JPanel implements ActionListener {
 			
 			c.gridy = 2;
 			c.gridx = 0;
-			JLabel toNodeTypeName = new JLabel("Type of 'To' node:");
-			customInputs.add(toNodeTypeName, c);
-			
-			c.gridx = 1;
-			toNodeType = new JComboBox(arcDirections);
-			customInputs.add(toNodeType, c);
-			
-			c.gridy = 3;
-			c.gridx = 0;
 			JLabel ToNodeFieldName = new JLabel("Name of 'To' node:");
 			customInputs.add(ToNodeFieldName, c);
 			
 			c.gridx = 1;
 			toNodeField = new JTextField(15);
-			customInputs.add(toNodeField, c);			
+			customInputs.add(toNodeField, c);						
 		} 
 		// Empty out the custom fields
 		else {
@@ -166,7 +156,7 @@ public class NodeForm extends JPanel implements ActionListener {
 	}
 	
 	public String getFromType() {
-		if (((String)fromNodeType.getSelectedItem()).equals("Place --> Transition")) {
+		if (((String)arcDirectionField.getSelectedItem()).equals("Place --> Transition")) {
 			return "place";
 		}
 		else {
@@ -175,7 +165,7 @@ public class NodeForm extends JPanel implements ActionListener {
 	}
 	
 	public String getToType() {
-		if (((String)fromNodeType.getSelectedItem()).equals("Place --> Transition")) {
+		if (((String)arcDirectionField.getSelectedItem()).equals("Place --> Transition")) {
 			return "transition";
 		}
 		else {
