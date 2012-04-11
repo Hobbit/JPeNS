@@ -1,6 +1,7 @@
 package master;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -15,11 +16,12 @@ import petrinet.gui.NodeForm;
 
 @SuppressWarnings("serial")
 public class NetBuilder extends JFrame implements ActionListener {
-	//static JFrame window = null;
-	ArrayList<NodeForm> nodeForms = new ArrayList<NodeForm>();
-	JPanel nodesPanel = new JPanel();
 	final String ADD_NODE = "Add";
 	final String EXPORT_FORM = "Export";
+
+	ArrayList<NodeForm> nodeForms = new ArrayList<NodeForm>();
+	JPanel nodesPanel = new JPanel();
+	JTextArea errors = new JTextArea();
 	
 	/**
 	 * Builds a frame that allows a user to create new nodes for a petrinet graph
@@ -31,6 +33,11 @@ public class NetBuilder extends JFrame implements ActionListener {
 		this.setLayout(new BorderLayout());
 		
 		Container contentPane = getContentPane();
+		
+		errors.setEditable(false);
+		errors.setForeground(Color.RED);
+		errors.setVisible(false);
+		contentPane.add(errors, BorderLayout.NORTH);
 				
 		nodesPanel.setLayout(new GridBagLayout());
 		JScrollPane scrollPane = new JScrollPane(nodesPanel);
@@ -75,16 +82,49 @@ public class NetBuilder extends JFrame implements ActionListener {
 			InsertForm();
 		}
 		else if (command.equals(EXPORT_FORM)) {
-			JFileChooser chooser = new JFileChooser("Where would you like to save your file?");
-			int returnVal = chooser.showSaveDialog(this);
+			// Validate the form and check for any errors
+			Validate();
 			
-			// If the user selected a file, lets export to it
-			if (returnVal == JFileChooser.APPROVE_OPTION){
-			
-				Exporter ex = new Exporter(nodeForms);
-				ex.Export(chooser.getSelectedFile());
-				this.setVisible(false);
+			if (errors.getText().equals("")){
+				JFileChooser chooser = new JFileChooser("Where would you like to save your file?");
+				int returnVal = chooser.showSaveDialog(this);
+				
+				// If the user selected a file, lets export to it
+				if (returnVal == JFileChooser.APPROVE_OPTION){
+						Exporter ex = new Exporter(nodeForms);
+						ex.Export(chooser.getSelectedFile());
+						this.setVisible(false);
+				}
 			}
+		}
+	}
+	
+	private void Validate() {
+		// Clear validation errors
+		errors.setText("");
+		
+		String errorMsg = "";
+		for (NodeForm node : nodeForms) {
+			if (node.getName().equals("")) {
+				errorMsg = errorMsg + "Not all of the nodes have names.\n";
+			}
+			if (node.getType().equals("")) {
+				errorMsg = errorMsg + "Not all of the nodes have types.\n";
+			}
+			else if (node.getType().equals("Arc")) {
+				if (node.getFromName().equals("") || node.getToName().equals("")) {
+					errorMsg = errorMsg + "Not all arc end nodes have names.\n";
+				}
+			}
+		}
+		
+		errors.setText(errorMsg);
+		
+		if (!errorMsg.equals("")) {
+			errors.setVisible(true);
+		}
+		else {
+			errors.setVisible(false);
 		}
 	}
 }
