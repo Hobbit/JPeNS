@@ -26,7 +26,11 @@ public class Importer
 			if (file.isFile())
 			{
 				ParseFile(file, pn);
-			}
+
+		        System.out.println("\nTransitions: " + pn.getTransitions().toString());
+		        System.out.println("Places: " + pn.getPlaces().toString());
+				System.out.println("Arcs: " + pn.getArcs().toString());
+}
 			else
 			{
 				throw new IOException();
