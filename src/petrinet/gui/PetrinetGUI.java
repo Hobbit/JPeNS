@@ -180,7 +180,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		}
 		else if(buttonString.equals("Import")){
 			//To be implemented fully
-			JFileChooser fileBrowser = new JFileChooser();
+			JFileChooser fileBrowser = new JFileChooser(System.getProperty("user.dir"));
 			int returnVal = fileBrowser.showOpenDialog(PetrinetGUI.this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File newFile = fileBrowser.getSelectedFile();
