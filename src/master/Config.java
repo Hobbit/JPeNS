@@ -14,9 +14,9 @@ public class Config {
 	public static final int TRANSITION_WIDTH = 80;
 	public static final int TRANSITION_HEIGHT = 30;
 	public static final String PLACE_STYLE = "shape=ellipse;perimter=ellipsePerimeter;strokeColor=black;fillColor=gray";
-	public static final String HAS_TOKENS_STYLE = "shape=ellipse;perimter=ellipsePerimeter;strokeColor=white;fillColor=blue";
-	public static final String TRANSITION_STYLE = "strokeColor=green;fillColor=orange";
-	public static final String CAN_FIRE_STYLE = "strokeColor=green;fillColor=green";
+	public static final String HAS_TOKENS_STYLE = "shape=ellipse;perimter=ellipsePerimeter;strokeColor=black;fillColor=blue;fontColor=white";
+	public static final String TRANSITION_STYLE = "strokeColor=black;fillColor=orange";
+	public static final String CAN_FIRE_STYLE = "strokeColor=black;fillColor=green";
 
 	/*
 	 * Button styles
