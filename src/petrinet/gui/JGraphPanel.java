@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+
 @SuppressWarnings("serial")
 
 /**
@@ -20,7 +21,9 @@ public class JGraphPanel extends JPanel {
 	public JGraphPanel(mxGraph graph) {
 		this.graph = graph;
 	    defaultParent = graph.getDefaultParent();
-	    
+	    graph.setAllowDanglingEdges(false);
+	    graph.setCellsEditable(false);
+
 	    DrawGraph();
 	}
 	
@@ -29,7 +32,8 @@ public class JGraphPanel extends JPanel {
 	 */
 	private void DrawGraph() {
 	    graphComponent = new mxGraphComponent(graph);
-	    	    
+	    graphComponent.setConnectable(false);
+	    
 	    mxOrganicLayout organic = new mxOrganicLayout(graph);
 	    organic.setAverageNodeArea(40000);
 	    organic.execute(defaultParent);
