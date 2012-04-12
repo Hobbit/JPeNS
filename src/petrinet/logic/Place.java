@@ -95,7 +95,6 @@ extends PetrinetObject {
     @Override
     public String toString() {
         return super.toString() + 
-               " Tokens=" + this.tokens +
-               " max=" + (hasUnlimitedMaxTokens()? "unlimited" : this.maxTokens);
+               " Tokens=" + this.tokens;
     }
 }

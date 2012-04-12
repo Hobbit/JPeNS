@@ -26,6 +26,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import petrinet.logic.Petrinet;
@@ -134,6 +135,9 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 		buttons = new TransitionButton[tList.size()];
 		labels = new PlaceLabel[pList.size()];
 				
+		JLabel TransLabel = new JLabel("Transitions");
+		transitionsPanel.add(TransLabel);
+		
 		//Steps through each transition and creates a new button and initializes
 		//it to the appropriate status color.
 		for(int i = 0; i < tList.size(); i++){
