@@ -80,6 +80,7 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         JMenu file = new JMenu("File");
         JMenuItem newP = new JMenuItem("New");
         JMenuItem importP = new JMenuItem("Import");
+        JMenuItem rescan = new JMenuItem("Restart");
         JMenuItem quit = new JMenuItem("Quit");
         
         //Help menu
@@ -106,10 +107,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
         menuBar.add(file);
         file.add(newP);
         file.add(importP);
+        file.add(rescan);
         file.add(quit);
         setJMenuBar(menuBar);
         newP.addActionListener(this);
         importP.addActionListener(this);
+        rescan.addActionListener(this);
         quit.addActionListener(this);
         
         //Help menu
@@ -190,6 +193,12 @@ public class PetrinetGUI extends JFrame implements ActionListener{
 				window.dispose();
 				petrinet.gui.PetrinetGUI.displayPetrinet(pn);
 		    }			
+		}
+		else if (buttonString.equals("Restart")) {
+			pn.clear();
+			Importer.Import(pn.getFilepath(), pn);
+			window.dispose();
+			petrinet.gui.PetrinetGUI.displayPetrinet(pn);
 		}
 		else if(buttonString.equals("Quit")){
 			//create a new quit confirmation window
