@@ -86,7 +86,7 @@ public class NetBuilder extends JFrame implements ActionListener {
 			Validate();
 			
 			if (errors.getText().equals("")){
-				JFileChooser chooser = new JFileChooser("Where would you like to save your file?");
+				JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
 				int returnVal = chooser.showSaveDialog(this);
 				
 				// If the user selected a file, lets export to it
