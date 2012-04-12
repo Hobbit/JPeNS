@@ -1,7 +1,10 @@
 Java Petri Net Simulator (JPeNS)
 
-JPeNS is a program to help simulate a Petri Network of states and transitions. It is geared to help people more eaisly grasp the concepts when they are first starting out.
+JPeNS is a program to help simulate a Petri Network of states and transitions. It is geared to help people more easily grasp the concepts when they are first starting out.
 
 By 
 -Jonathan Babbitt
 -Chris Hobbs
+
+To run JPeNS, merely checkout the project into a directory of your choice. Then open Eclipse and tell it to import an existing project into your workspace. Then select the directory that you downloaded JPeNS into and it should be imported into Eclipse. All you then need to do is browse to the JPeNS/src/master directory, open MainApp.java and run.
+
